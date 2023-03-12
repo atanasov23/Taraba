@@ -1,0 +1,49 @@
+.addBtn {
+    position: absolute;
+    background-color: white;
+    height: 50px;
+    width: 150px;
+    top: 18%;
+    left: 60%;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.addBtn p {
+    position: relative;
+    text-align: center;
+    padding: 12px;
+    font-size: 17px;
+    color: #002f34;
+}
+
+.logo {
+    border-radius: 100px;
+    height: 80px;
+    width: 80px;
+}
+
+.navigation {
+    position: absolute;
+    font-size: 19px;
+    width: 350px;
+    left: 72%;
+    top: 35%;
+}
+
+.navigation a {
+    text-decoration: none;
+    margin: 10px;
+    color: aliceblue;
+}
+
+header {
+    position: relative;
+    background-color: #002f34;
+    width: 100%;
+    height: 80px;
+}
+
+*:focus {
+    outline: none;
+}

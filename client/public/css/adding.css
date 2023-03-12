@@ -1,0 +1,104 @@
+.addingContainer{
+    position: absolute;
+    width: 800px;
+    height: 900px;
+    left: 30%;
+    top: 20%;
+    background-color: white;
+}
+
+label{
+    font-size: 20px;
+    padding: 1.5%;
+    color: #002f34;
+}
+
+.form-input{
+    width: 400px;
+    height: 50px;
+    border: none;
+    margin: 20px;
+    font-size: 20px;
+    background-color: #F5F5F5;
+}
+
+#addingImage{
+    height: 200px;
+    width: 200px;
+    background-color: aqua;
+    background-image: url('../image/logo.jpg');
+}
+
+#image{
+    height: 150px;
+    width: 150px;
+}
+
+span{
+    position: relative;
+    margin-top: 30px;
+    font-size: 20px;
+    padding: 1.5%;
+    color: #002f34;
+
+}
+
+select{
+    width: 400px;
+    height: 50px;
+    border: none;
+    background-color: #F5F5F5;
+}
+
+.text-input{
+    width: 400px;
+    height: 200px;
+    border: none;
+    font-size: 20px;
+    background-color: #F5F5F5;
+}
+
+#adding{
+    background-color: #002f34;
+    position: relative;
+    border: none;
+    height: 50px;
+    width: 300px;
+    left: 33%;
+    color: white;
+}
+
+.image-upload>input {
+    display: none;
+}
+
+.file-input{
+    position: relative;
+    height: 100px;
+    width: 100px;
+    margin: 10px;
+}
+
+.input-box{
+    display: flex;
+    height: auto;
+   
+}
+
+.del-image{
+    position: relative;
+    height: 105px;
+    width: 105px;
+    margin: 10px;
+}
+
+.option{
+    position: absolute;
+    display: none;
+}
+
+.image-upload{
+    background-color: #F5F5F5;
+    margin: 2px;
+    height: 120px;
+}
