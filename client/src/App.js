@@ -2,8 +2,8 @@ import Footer from "./components/footer";
 import Header from "./components/header";
 import { Login } from "./components/pages/login";
 import { Register } from "./components/pages/register";
-import { Route, Router, Routes, Navigate } from 'react-router-dom';
-import Cookies from 'universal-cookie';
+import { Route, Routes } from 'react-router-dom';
+/* import Cookies from 'universal-cookie'; */
 import Auth from './components/auth';
 import Search from "./components/search";
 import Adding from "./components/pages/adding";
@@ -27,13 +27,9 @@ function Test3() {
     )
 }
 
-function Test4() {
-    return (
-        <h1>Test4</h1>
-    )
-}
-
 function App() {
+
+    
 
     /*   const cookies = new Cookies();
       cookies.set('myCat', 'Pacmadddn', { path: '/' }); */
