@@ -12,6 +12,8 @@ export default function Auth() {
 
         const cookie = cookies.get('auth');
 
+        // trqbva da vzema tokena ot cookie i da go proverq s sign na jwt sled koeto da produlji autha.
+
         let flag = true;
 
         cookie ? flag = true : flag = false;
