@@ -1,29 +1,42 @@
 import React from 'react';
 import { Outlet, Navigate, useLocation } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import { useJwt } from "react-jwt";
+import { isJwtExpired } from 'jwt-check-expiration';
 
 export default function Auth() {
+
+    const cookies = new Cookies();
+
+    const token = cookies.get('auth');
+
+    const { decodedToken } = useJwt(token);
+
+    cookies.set('user', JSON.stringify({ decodedToken }));
 
     const location = useLocation();
 
     function jwt() {
 
-        const cookies = new Cookies();
+        if (token) {
 
-        const cookie = cookies.get('auth');
+            if (isJwtExpired(token)) {
 
-        // trqbva da vzema tokena ot cookie i da go proverq s sign na jwt sled koeto da produlji autha.
+                cookies.remove('auth');
 
-        let flag = true;
+                return true;
 
-        cookie ? flag = true : flag = false;
+            }
+            
+        } else {
 
-        return flag;
+            return true;
+        }
     }
 
     return (
 
-        jwt() ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />
+        !jwt() ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />
     )
 
 }

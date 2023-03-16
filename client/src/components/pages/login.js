@@ -26,7 +26,7 @@ export function Login() {
                 setError(a.response)
 
                 const cookies = new Cookies();
-                cookies.set('auth', a.token, { path: '/' });
+                cookies.set('auth', a.token);
 
                 setStatus(status => status = a.login);
             });

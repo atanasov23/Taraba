@@ -41,10 +41,10 @@ const login = async (loginData, res) => {
         const payloads = {
             _id: user._id,
             username: user.username,
-            email: user.email
+            email: user.email,
         }
 
-        const token = jwt.sign(payloads, secret);
+        const token = jwt.sign(payloads, secret, { expiresIn: "1h"} );
 
         res.status(200).json({
             login: true,
