@@ -2,10 +2,6 @@ import { useRef, useState } from "react";
 
 export default function Adding() {
 
-    const image = useRef();
-
-    const file = useRef();
-
     const [input, setInput] = useState({});
 
     const [uploadFile, setFile] = useState("");
@@ -14,20 +10,7 @@ export default function Adding() {
 
         e.preventDefault();
 
-        /*    fetch('http://localhost:1000/adding', {
-   
-               method: 'POST',
-               headers: {
-                   "Content-Type": "application/json",
-               },
-               body: JSON.stringify(input)
-   
-           }) */
-
-        e.preventDefault();
-
         const data = new FormData();
-        /* data.append("file", uploadFile); */
 
         uploadFile.forEach(el => {
             data.append("file", el);
@@ -49,7 +32,6 @@ export default function Adding() {
     }
 
     const onChange = (e) => {
-
         upload(e);
         getInputValue(e);
     }
@@ -71,48 +53,11 @@ export default function Adding() {
         });
     }
 
-    const showDeleteButton = (e) => {
-
-        image.current = e.target.src;
-
-        file.current = document.getElementById(e.target.name);
-
-        if (e.target.src !== 'http://localhost:3000/image/download-image.png') {
-
-            e.target.src = 'image/delete-icon.png';
-        }
-
-    }
-
-    const hideDeleteButton = (e) => {
-
-        if (e.target.src === 'http://localhost:3000/image/delete-icon.png') {
-
-            e.target.src = image.current;
-
-        }
-    }
-
-    const removeFile = (e) => {
-
-        file.current.value = "";
-
-        if (e.target.src === 'http://localhost:3000/image/delete-icon.png') {
-
-            e.target.src = image.current;
-
-            e.target.src = 'image/download-image.png';
-
-            file.current.disabled = false;
-
-            setInput(values => ({ ...values, [e.target.name]: "" }));
-        }
-    }
-
     return (
 
         <div className="addingContainer">
             <span>Добави обява</span>
+            <div id='error'>Title is required</div>
             <form onSubmit={sendData}>
                 <div className="form-group">
                     <label htmlFor="title">Заглавие *</label>
@@ -151,10 +96,8 @@ export default function Adding() {
                         <div className='option' >
                             <img alt="" className="del-image" src='image/delete-icon.png' />
                         </div>
-                        <label htmlFor="input-1" className='input-1' onClick={removeFile}>
-                            <img alt="" className="file-input" name="input-1" src="/image/download-image.png"
-                                onMouseEnter={showDeleteButton}
-                                onMouseLeave={hideDeleteButton} ref={image} />
+                        <label htmlFor="input-1" className='input-1'>
+                            <img alt="" className="file-input" name="input-1" src="/image/download-image.png" />
                         </label>
                         <input
                             type="file"
@@ -166,10 +109,8 @@ export default function Adding() {
                     </div>
 
                     <div className="image-upload">
-                        <label htmlFor="input-2" className='input-2' onClick={removeFile}>
-                            <img alt="" className="file-input" name="input-2" src="/image/download-image.png"
-                                onMouseEnter={showDeleteButton}
-                                onMouseLeave={hideDeleteButton} ref={image} />
+                        <label htmlFor="input-2" className='input-2'>
+                            <img alt="" className="file-input" name="input-2" src="/image/download-image.png" />
                         </label>
                         <input
                             type="file"
@@ -180,10 +121,8 @@ export default function Adding() {
                         />
                     </div>
                     <div className="image-upload">
-                        <label htmlFor="input-3" className='input-3' onClick={removeFile}>
-                            <img alt="" className="file-input" name="input-3" src="/image/download-image.png"
-                                onMouseEnter={showDeleteButton}
-                                onMouseLeave={hideDeleteButton} ref={image} />
+                        <label htmlFor="input-3" className='input-3'>
+                            <img alt="" className="file-input" name="input-3" src="/image/download-image.png" />
                         </label>
                         <input
                             type="file"
@@ -194,10 +133,8 @@ export default function Adding() {
                         />
                     </div>
                     <div className="image-upload">
-                        <label htmlFor="input-4" className='input-4' onClick={removeFile}>
-                            <img alt="" className="file-input" name="input-4" src="/image/download-image.png"
-                                onMouseEnter={showDeleteButton}
-                                onMouseLeave={hideDeleteButton} ref={image} />
+                        <label htmlFor="input-4" className='input-4'>
+                            <img alt="" className="file-input" name="input-4" src="/image/download-image.png" />
                         </label>
                         <input
                             type="file"
@@ -209,10 +146,8 @@ export default function Adding() {
                     </div>
 
                     <div className="image-upload">
-                        <label htmlFor="input-5" className='input-5' onClick={removeFile}>
-                            <img alt="" className="file-input" name="input-5" src="/image/download-image.png"
-                                onMouseEnter={showDeleteButton}
-                                onMouseLeave={hideDeleteButton} ref={image} />
+                        <label htmlFor="input-5" className='input-5'>
+                            <img alt="" className="file-input" name="input-5" src="/image/download-image.png" />
                         </label>
                         <input
                             type="file"

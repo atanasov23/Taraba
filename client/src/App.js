@@ -3,7 +3,6 @@ import Header from "./components/header";
 import { Login } from "./components/pages/login";
 import { Register } from "./components/pages/register";
 import { Route, Routes } from 'react-router-dom';
-/* import Cookies from 'universal-cookie'; */
 import Auth from './components/auth';
 import Search from "./components/search";
 import Adding from "./components/pages/adding";
