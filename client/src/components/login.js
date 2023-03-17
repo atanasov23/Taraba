@@ -1,47 +1,42 @@
 import { Link } from 'react-router-dom';
 import { useState, useRef } from 'react';
-import { login } from '../../services/authService';
+import { login } from '../services/authService';
 import { Navigate } from 'react-router-dom';
-import Cookies from 'universal-cookie';
+import { useCookies } from 'react-cookie';
+import jwt_decode from "jwt-decode";
 
 export function Login() {
+
+    const [cookies, setCookie ] = useCookies();
 
     const [input, setInput] = useState({});
 
     const [error, setError] = useState("");
 
-    /* const currentPassword = useRef(); */
-
     const [status, setStatus] = useState(false);
 
     async function sendData() {
 
-        /* const checkData = dataValidation(input); */
-
-        /* setError(checkData.err); */
-
         await login(input)
             .then(a => a.json())
             .then(a => {
-                setError(a.response)
 
-                const cookies = new Cookies();
-                cookies.set('auth', a.token);
+                setError(a.response);
+                
+                if (a.response === undefined) {
 
-                setStatus(status => status = a.login);
+                    setCookie('auth', a.token);
+
+                    setCookie('user', jwt_decode(a.token));
+
+                    setStatus(status => status = a.login);
+
+                }
             });
 
     }
 
     function change(e) {
-
-        /*  if (e.target.name === 'password') {
-     
-           currentPassword.current = e.target.value;
-     
-         } */
-
-        /* setError(inputValidation(e.target, currentPassword)); */
 
         const name = e.target.name;
         const value = e.target.value;
@@ -53,7 +48,6 @@ export function Login() {
     function submit(e) {
 
         e.preventDefault();
-
     }
 
     return (

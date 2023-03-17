@@ -1,11 +1,11 @@
 import Footer from "./components/footer";
 import Header from "./components/header";
-import { Login } from "./components/pages/login";
-import { Register } from "./components/pages/register";
+import { Login } from "./components/login";
+import { Register } from "./components/register";
 import { Route, Routes } from 'react-router-dom';
 import Auth from './components/auth';
 import Search from "./components/search";
-import Adding from "./components/pages/adding";
+import Adding from "./components/adding";
 import { Test } from "./components/testComponent";
 
 function Test1() {
@@ -28,46 +28,21 @@ function Test3() {
 
 function App() {
 
-    
-
-    /*   const cookies = new Cookies();
-      cookies.set('myCat', 'Pacmadddn', { path: '/' }); */
-
     return (
         <>
+            <Header />
+
             <main>
 
                 <Routes>
 
-                    <Route path='/test' element={<Test />}></Route>
+                    <Route path='/test' element={<Test />} />
 
-                    <Route path='/' element={
-                        <>
-                            <Header />
-                            <Search />
-                        </>
-                    }
-                    ></Route>
+                    <Route path='/' element={<Search />} />
 
-                    <Route path='/login' element={
+                    <Route path='/login' element={<Login />} />
 
-                        <>
-                            <Header />
-                            <Login />
-                        </>
-
-                    }
-                    ></Route>
-
-                    <Route path='/register' element={
-
-                        <>
-                            <Header />
-                            <Register />
-                        </>
-
-                    }
-                    ></Route>
+                    <Route path='/register' element={<Register />} />
 
                     <Route element={< Auth />}>
 
@@ -77,16 +52,16 @@ function App() {
 
                         <Route path='/user/profile' element={<Test3 />} />
 
-                        <Route path='/adding' element={<><Header /> <Adding /></>} />
+                        <Route path='/adding' element={<Adding />} />
 
                     </Route>
+
                 </Routes>
 
             </main>
 
             <Footer />
         </>
-
     )
 }
 

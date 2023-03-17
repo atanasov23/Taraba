@@ -1,10 +1,4 @@
 
-export function loginValidation() {
-
-
-
-}
-
 export function dataValidation(data) {
 
     if (data.username === undefined
@@ -21,9 +15,6 @@ export function dataValidation(data) {
         return { send: true };
 
     }
-
-
-
 }
 
 export function inputValidation(element, password) {

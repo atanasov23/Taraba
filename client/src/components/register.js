@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import { inputValidation, dataValidation } from '../../utils/inputValidation';
-import { register } from '../../services/authService';
+import { inputValidation, dataValidation } from '../utils/inputValidation';
+import { register } from '../services/authService';
 import { Navigate } from 'react-router-dom';
 
 export function Register() {

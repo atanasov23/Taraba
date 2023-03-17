@@ -71,9 +71,11 @@ export default function Adding() {
                 <div className="form-group">
                     <label htmlFor="">Категория *</label>
                     <select onChange={getInputValue} name="category" value={input.name}>
-                        <option value='electronic'>Елетроника</option>
+                        <option value='electronics'>Електроника</option>
                         <option value='tools'>Инструменти</option>
                         <option value='animals'>Животни</option>
+                        <option value='services'>Услуги</option>
+                        <option value='cars'>Коли</option>
                     </select>
                 </div>
                 <div className="form-group">
