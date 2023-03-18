@@ -1,6 +1,13 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { AddingPicture } from "./addingPicture";
+import { useCookies } from 'react-cookie';
+import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inputValidation';
 
 export default function Adding() {
+
+    const [error, setError] = useState();
+
+    const [cookies] = useCookies();
 
     const [input, setInput] = useState({});
 
@@ -10,16 +17,32 @@ export default function Adding() {
 
         e.preventDefault();
 
-        const data = new FormData();
+        const checkData = addingEmptyFieldValidation(input);
 
-        uploadFile.forEach(el => {
-            data.append("file", el);
-        })
+        setError(checkData.err);
 
-        fetch('http://localhost:1000/user/adding/ad', {
-            method: "POST",
-            body: data,
-        })
+        if (checkData.send && error === undefined) {
+
+            const data = new FormData();
+
+            uploadFile.forEach(el => {
+                data.append("file", el);
+            });
+
+            fetch('http://localhost:1000/user/adding/ad', {
+                method: "POST",
+                body: data,
+            });
+
+            fetch('http://localhost:1000/user/adding/pictures', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(input),
+            });
+
+        }
 
     }
 
@@ -28,7 +51,20 @@ export default function Adding() {
         const name = e.target.name;
         const value = e.target.value;
 
-        setInput(values => ({ ...values, [name]: value }));
+        if (value.startsWith("C")) {
+
+            setInput(values => ({ ...values, [name]: value.replace('C:', "").replace('\\fakepath\\', '') }));
+
+        } else {
+
+            setInput(values => ({ ...values, [name]: value }));
+        }
+    }
+
+    const dataValidation = (e) => {
+
+        setError(addingInputValidation(e.target));
+
     }
 
     const onChange = (e) => {
@@ -57,13 +93,14 @@ export default function Adding() {
 
         <div className="addingContainer">
             <span>Добави обява</span>
-            <div id='error'>Title is required</div>
+            <div id='error'>{error}</div>
             <form onSubmit={sendData}>
                 <div className="form-group">
                     <label htmlFor="title">Заглавие *</label>
                     <input className="form-input"
                         type="text"
                         onChange={getInputValue}
+                        onBlur={dataValidation}
                         name="title"
                         value={input.name}
                     />
@@ -84,100 +121,46 @@ export default function Adding() {
                         className="text-input"
                         type="text"
                         onChange={getInputValue}
+                        onBlur={dataValidation}
                         name="description"
                         value={input.name}
                     />
                 </div>
 
-                <div className="input-box" id='input-box'>
+                <AddingPicture input={input} onChange={onChange} />
 
-                    <span>Снимки *</span>
-
-                    <div className="image-upload">
-
-                        <div className='option' >
-                            <img alt="" className="del-image" src='image/delete-icon.png' />
-                        </div>
-                        <label htmlFor="input-1" className='input-1'>
-                            <img alt="" className="file-input" name="input-1" src="/image/download-image.png" />
-                        </label>
-                        <input
-                            type="file"
-                            id="input-1"
-                            onChange={onChange}
-                            name="input-1"
-                            value={input.name || ''}
-                        />
-                    </div>
-
-                    <div className="image-upload">
-                        <label htmlFor="input-2" className='input-2'>
-                            <img alt="" className="file-input" name="input-2" src="/image/download-image.png" />
-                        </label>
-                        <input
-                            type="file"
-                            id="input-2"
-                            onChange={onChange}
-                            name="input-2"
-                            value={input.name || ''}
-                        />
-                    </div>
-                    <div className="image-upload">
-                        <label htmlFor="input-3" className='input-3'>
-                            <img alt="" className="file-input" name="input-3" src="/image/download-image.png" />
-                        </label>
-                        <input
-                            type="file"
-                            id="input-3"
-                            onChange={onChange}
-                            name="input-3"
-                            value={input.name || ''}
-                        />
-                    </div>
-                    <div className="image-upload">
-                        <label htmlFor="input-4" className='input-4'>
-                            <img alt="" className="file-input" name="input-4" src="/image/download-image.png" />
-                        </label>
-                        <input
-                            type="file"
-                            id="input-4"
-                            onChange={onChange}
-                            name="input-4"
-                            value={input.name || ''}
-                        />
-                    </div>
-
-                    <div className="image-upload">
-                        <label htmlFor="input-5" className='input-5'>
-                            <img alt="" className="file-input" name="input-5" src="/image/download-image.png" />
-                        </label>
-                        <input
-                            type="file"
-                            id="input-5"
-                            onChange={onChange}
-                            name="input-5"
-                            value={input.name || ''}
-                        />
-                    </div>
-
-                </div>
                 <div className="form-group">
                     <label htmlFor="">Локация *</label>
                     <input
                         className="form-input"
                         type="text"
                         onChange={getInputValue}
+                        onBlur={dataValidation}
                         name="location"
                         value={input.name}
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="">Данни за контакт * </label>
+
+                    <label htmlFor="email">Имейл</label>
                     <input
                         className="form-input"
-                        type="text"
+                        type='text'
+                        id='email'
+                        name='email'
                         onChange={getInputValue}
-                        name="contactData"
+                        value={cookies.user.email}
+                        readOnly
+
+                    />
+                    <br></br>
+                    <label htmlFor="phone">Телефонен номер</label>
+                    <input
+                        className="form-input"
+                        type='text'
+                        id='phone'
+                        name='phone'
+                        onChange={getInputValue}
                         value={input.name}
                     />
                 </div>

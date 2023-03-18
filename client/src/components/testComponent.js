@@ -85,6 +85,7 @@ export function Test() {
             <input type="file" name="file" onChange={(e) => setFile(oldArray => [...oldArray, e.target.files[0]] )}></input>
             <button onClick={send}>Prati</button>
         </form>
+        
 
         /*  <>
              <div className="input-box">

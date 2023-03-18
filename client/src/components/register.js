@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { inputValidation, dataValidation } from '../utils/inputValidation';
+import { registerInputValidation, registerDataValidation } from '../utils/inputValidation';
 import { register } from '../services/authService';
 import { Navigate } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ export function Register() {
 
   async function sendData() {
 
-    const checkData = dataValidation(input);
+    const checkData = registerDataValidation(input);
 
     setError(checkData.err);
 
@@ -38,7 +38,7 @@ export function Register() {
 
     }
 
-    setError(inputValidation(e.target, currentPassword));
+    setError(registerInputValidation(e.target, currentPassword));
 
     const name = e.target.name;
     const value = e.target.value;

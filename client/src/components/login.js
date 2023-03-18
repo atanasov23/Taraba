@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { login } from '../services/authService';
 import { Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
@@ -7,7 +7,7 @@ import jwt_decode from "jwt-decode";
 
 export function Login() {
 
-    const [cookies, setCookie ] = useCookies();
+    const [ cookie, setCookie ] = useCookies();
 
     const [input, setInput] = useState({});
 

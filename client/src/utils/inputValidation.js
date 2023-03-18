@@ -1,5 +1,5 @@
 
-export function dataValidation(data) {
+export function registerDataValidation(data) {
 
     if (data.username === undefined
         || data.password === undefined
@@ -10,6 +10,7 @@ export function dataValidation(data) {
             err: 'All fields is required',
             send: false
         };
+
     } else {
 
         return { send: true };
@@ -17,7 +18,46 @@ export function dataValidation(data) {
     }
 }
 
-export function inputValidation(element, password) {
+export function addingInputValidation(data) {
+
+    if (data.name === 'title' && data.value.length < 3) {
+
+        return 'Title is too short!';
+
+    } else if (data.name === 'description' && data.value.length < 5) {
+
+        return 'Description is too short!';
+
+    } else if (data.name === 'location' && data.value.length < 3) {
+
+        return 'Invalid location!';
+
+    }
+    
+    
+}
+
+export function addingEmptyFieldValidation(data) {
+
+    if (data.title === undefined
+        || data.description === undefined
+        || data.location === undefined
+    ) {
+
+        return {
+            err: 'All fields is required',
+            send: false
+        };
+
+    } else {
+
+        return { send: true };
+
+    }
+
+}
+
+export function registerInputValidation(element, password) {
 
     if (element.value.length < 3 && element.name === 'username') {
 

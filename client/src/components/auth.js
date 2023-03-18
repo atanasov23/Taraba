@@ -5,20 +5,21 @@ import { isJwtExpired } from 'jwt-check-expiration';
 
 export default function Auth() {
 
-    const [cookies, removeCookie] = useCookies();
+    const [cookies, removeCookie, setCookie ] = useCookies("");
 
     const location = useLocation();
     
     function jwt() {
 
-        if (cookies.auth) {
+    
+        if (cookies.auth !== 'undefined') {
 
             if (isJwtExpired(cookies.auth)) {
 
                 removeCookie('auth');
                 
                 removeCookie('user');
-
+                
                 return true;
 
             }
