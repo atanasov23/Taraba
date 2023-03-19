@@ -8,6 +8,7 @@ import Search from "./components/search";
 import Adding from "./components/adding";
 import { Test } from "./components/testComponent";
 import { CategoryView } from "./components/categoryView";
+import { ContentView } from './components/contentView';
 
 function Test1() {
     return (
@@ -39,7 +40,7 @@ function App() {
 
                     <Route path='/test' element={<Test />} />
 
-                    <Route path='/' element={<><Search/> <CategoryView/></>} />
+                    <Route path='/' element={<><Search/> <CategoryView/> <ContentView/> </>} />
 
                     <Route path='/login' element={<Login />} />
 

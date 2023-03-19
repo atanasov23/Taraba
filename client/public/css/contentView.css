@@ -1,0 +1,60 @@
+.contentView-container {
+    position: absolute;
+    left: 28%;
+    top: 55%;
+    height: auto;
+    width: 840px;
+}
+
+.ad img{
+    position: relative;
+    height: 150px;
+    width: 150px;
+}
+
+.textContainer{
+    width: 650px;
+    height: 150px;
+    transform: translate(25%,-100%);
+   
+}
+.textContainer button {
+
+    position: relative;
+    left: 78%;
+    top: -10%;
+    border: none;
+    color: white;
+    background-color: #002f34;
+}
+
+.textContainer h1{
+    position: relative;
+    left: 5%;
+    top: 10%;
+    font-size: 30px;
+}
+
+.location{
+
+    position: relative;
+    left: 80%;
+    top: -10%;
+    font-size: 20px;
+}
+
+.price{
+    position: relative;
+    left: 80%;
+    top: -10%;
+    font-size: 20px;
+}
+
+.container{
+
+    height: 180px;
+}
+
+
+
+

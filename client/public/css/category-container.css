@@ -4,16 +4,22 @@
     height: auto;
     height: auto;
     top: 29%;
-    left: 27%;
+    left: 26%;
 }
 
 .category-box {
     margin-left: 30px;
     height: 150px;
     width: 150px;
+    text-align: center;
 }
 
 .category-box img {
     height: 120px;
     width: 120px;
+}
+
+.category-box p {
+    font-size: 18px;
+    text-align: center;
 }

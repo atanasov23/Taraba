@@ -3,6 +3,7 @@
 @import url('./search.css');
 @import url('./adding.css');
 @import url('./category-container.css');
+@import url('./contentView.css');
 
 body {
     width: 100%;

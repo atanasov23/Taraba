@@ -51,6 +51,8 @@ export default function Adding() {
         const name = e.target.name;
         const value = e.target.value;
 
+        setInput(values => ({ ...values, ['owner']: cookies.user._id }));
+
         if (value.startsWith("C")) {
 
             setInput(values => ({ ...values, [name]: value.replace('C:', "").replace('\\fakepath\\', '') }));
@@ -137,6 +139,17 @@ export default function Adding() {
                         onChange={getInputValue}
                         onBlur={dataValidation}
                         name="location"
+                        value={input.name}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="">Цена *</label>
+                    <input
+                        className="form-input"
+                        type="text"
+                        onChange={getInputValue}
+                        onBlur={dataValidation}
+                        name="price"
                         value={input.name}
                     />
                 </div>

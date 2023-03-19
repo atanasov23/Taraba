@@ -17,6 +17,12 @@ const announced = new mongoose.Schema({
     phone: {
         type: String
     },
+    owner: {
+        type: mongoose.Types.ObjectId
+    },
+    price: {
+        type: String
+    },
     "pic-1": {
         type: String
     },

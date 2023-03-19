@@ -12,6 +12,8 @@ try {
 
     const server = express();
 
+    server.use(express.static('src/uploadFile'));
+
     server.use(cors());
 
     server.use(fileUpload());
@@ -19,8 +21,6 @@ try {
     server.use(express.urlencoded({ extended: false }));
 
     server.use(express.json());
-
-    server.use(express.static('public'));
 
     server.use(routes);
 
