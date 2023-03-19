@@ -4,6 +4,7 @@
 @import url('./adding.css');
 @import url('./category-container.css');
 @import url('./contentView.css');
+@import url('./adDetails.css');
 
 body {
     width: 100%;

@@ -8,6 +8,14 @@ route.get('/', async (req, res) => {
     res.send(ad);
 });
 
+route.get('/ad/details/:id', async (req, res) => {
+    
+    const adData = await Announced.findById(req.params.id);
+
+    res.send(adData);
+
+});
+
 route.get('/uploadFile', (req, res) => {
 
     res.send('daadadaddadad');

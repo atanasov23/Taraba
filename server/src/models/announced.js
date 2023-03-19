@@ -23,7 +23,8 @@ const announced = new mongoose.Schema({
     price: {
         type: String
     },
-    "pic-1": {
+    pictures: [String],
+    /* "pic-1": {
         type: String
     },
     "pic-2": {
@@ -37,7 +38,7 @@ const announced = new mongoose.Schema({
     },
     "pic-5": {
         type: String
-    }
+    } */
 
 });
 

@@ -1,0 +1,63 @@
+.adDetails{
+    position: relative;
+    width: 850px;
+    height: auto;
+    left: 28%;
+    background-color: white;
+}
+
+.mainPic  {
+    position: relative;
+    left: 15%;
+    height: 600px;
+    width: 600px;
+}
+
+.imageGalery img {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    margin-left: 20px;
+}
+
+.imageGalery{
+    position: relative;
+    margin-top: 20px;
+    
+}
+
+ .adData h1{
+    position: relative;
+    left: 5%;
+    margin-top: 20px;
+    color:#002f34 ;
+ }
+
+ .price{
+    position: relative;
+    font-size: 30px;
+    left: 5%;
+ }
+
+ .description{
+    position: relative;
+    font-size: 22px;
+    left: 5%;
+    width: 800px;
+ }
+
+ .buttons{
+    display: grid;
+ }
+ 
+ .buttons button{
+    position: relative;
+    width: 500px;
+    height: 50px;
+    border: none;
+    margin-top: 5px;
+    left: 20%;
+    background-color: #002f34;
+    color: white;
+    font-size: 20px;
+ }

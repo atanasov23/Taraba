@@ -6,9 +6,9 @@ import { Route, Routes } from 'react-router-dom';
 import Auth from './components/auth';
 import Search from "./components/search";
 import Adding from "./components/adding";
-import { Test } from "./components/testComponent";
 import { CategoryView } from "./components/categoryView";
 import { ContentView } from './components/contentView';
+import { AdDetails } from "./components/adDetails";
 
 function Test1() {
     return (
@@ -38,7 +38,7 @@ function App() {
 
                 <Routes>
 
-                    <Route path='/test' element={<Test />} />
+                    <Route path='/ad/details/:id' element={<><Search/><AdDetails/></>} />
 
                     <Route path='/' element={<><Search/> <CategoryView/> <ContentView/> </>} />
 
