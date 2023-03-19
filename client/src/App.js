@@ -38,9 +38,11 @@ function App() {
 
                 <Routes>
 
-                    <Route path='/ad/details/:id' element={<><Search/><AdDetails/></>} />
+                    
 
                     <Route path='/' element={<><Search/> <CategoryView/> <ContentView/> </>} />
+
+                    <Route path='/details/:id' element={<><Search/><AdDetails/></>} />
 
                     <Route path='/login' element={<Login />} />
 

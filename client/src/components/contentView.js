@@ -21,7 +21,7 @@ export function ContentView() {
             {fetchData.map(data => {
 
                 return (
-                    <Link key={data._id} to={`/ad/details/${data._id}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                    <Link key={data._id} to={`/details/${data._id}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                         <div className='ad'>
                             <div className="container p-3 my-3 border">
                                 <img src={`http://localhost:1000/${data.pictures[0]}`}></img>

@@ -11,7 +11,7 @@ export function AdDetails() {
 
     useEffect(() => {
 
-        fetch(`http://localhost:1000/ad/details/${params.id}`)
+        fetch(`http://localhost:1000/details/${params.id}`)
             .then(a => a.json())
             .then(a => {
                 setData((data) => [...data, a, a.pictures]);
@@ -34,7 +34,7 @@ export function AdDetails() {
             </div>
             <div className="adData">
                 <h1>{data[0] !== undefined ? data[0].title : ''}</h1>
-                <p className="price">{data[0] !== undefined ? data[0].price : ''}лв</p>
+                <p className="price-2">{data[0] !== undefined ? data[0].price : ''}лв</p>
                 <p className="description">{data[0] !== undefined ? data[0].description : ''}</p>
             </div>
 

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { AddingPicture } from "./addingPicture";
 import { useCookies } from 'react-cookie';
+import { Navigate} from 'react-router-dom'
 import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inputValidation';
+
 
 export default function Adding() {
 
@@ -29,12 +31,12 @@ export default function Adding() {
                 data.append("file", el);
             });
 
-            fetch('http://localhost:1000/user/adding/ad', {
+            fetch('http://localhost:1000/adding/ad', {
                 method: "POST",
                 body: data,
             });
 
-            fetch('http://localhost:1000/user/adding/pictures', {
+            fetch('http://localhost:1000/adding/pictures', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -43,6 +45,8 @@ export default function Adding() {
             });
 
         }
+
+       
 
     }
 
