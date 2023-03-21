@@ -10,6 +10,13 @@ route.get('/', async (req, res) => {
     res.send(ad);
 });
 
+route.get('/ad/edit/:id', async (req, res) => {
+
+    const ad = await Announced.findById(req.params.id);
+
+    res.send(ad);
+});
+
 route.post('/user/register', async (req, res) => {
 
     if (await register(req.body)) {
@@ -36,6 +43,8 @@ route.post('/user/login', async (req, res) => {
 route.get('/details/:id', async (req, res) => {
 
     const adData = await Announced.findById(req.params.id);
+
+    const test = await Announced.find({ owner: '640dfee3490da134b831aa1e' })
 
     res.send(adData);
 
@@ -77,5 +86,41 @@ route.post('/adding/pictures', (req, res) => {
     data.save();
 })
 
+
+route.post('/edit/ad', (req, res) => {
+
+    const files = req.files.file;
+
+    if (Array.from(files).length === 0) {
+
+        files.mv('./src/uploadFile/' + files.name);
+
+        data.pictures.push(files.name);
+
+    } else {
+
+        files.map(file => {
+
+            file.mv('./src/uploadFile/' + file.name);
+
+            data.pictures.push(file.name);
+        });
+    }
+})
+
+route.post('/edit/pictures', (req, res) => {
+
+    const userData = req.body;
+
+    data.title = userData.title;
+    data.category = userData.category;
+    data.description = userData.description;
+    data.location = userData.location;
+    data.phone = userData.phone;
+    data.owner = userData.owner;
+    data.price = userData.price;
+
+    data.save();
+})
 
 module.exports = route;

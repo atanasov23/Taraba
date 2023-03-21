@@ -1,18 +1,30 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { userAuth } from "../context/auth";
+import { useContext } from "react";
 
 export function Navigation() {
+
+    const userData = useContext(userAuth);
 
     return (
 
         <nav className="navigation">
-            <Link to="/user/messages">Съобщения</Link>
-            <Link to="/user/fav">Любими</Link>
+
             <div className="dropdown">
                 <button className="dropbtn">Профил</button>
                 <div className="dropdown-content">
-                    <Link to="#">Link 1</Link>
-                    <Link to="#">Link 2</Link>
-                    <Link to="#">Link 3</Link>
+                    {!userData.token ?
+                        <>
+                            <Link to="/login">Влизане</Link>
+                            <Link to="/register">Регистрация</Link>
+                        </>
+                        :
+                        <>
+                            <Link to="/user/messages">Съобщения</Link>
+                            <Link to="/user/fav">Любими</Link>
+                            <Link to="#">Излизане</Link>
+                        </>
+                    }
                 </div>
             </div>
         </nav>

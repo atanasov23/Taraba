@@ -1,7 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
+import { useContext } from "react";
+import { userAuth } from "../context/auth";
+
 
 export function AdDetails() {
+
+    const userData = useContext(userAuth);
 
     const params = useParams();
 
@@ -39,10 +44,23 @@ export function AdDetails() {
             </div>
 
             <div className="buttons">
-                <button>Добави в любими</button>
-                <button>Съобщение</button>
-                <button>Редакция</button>
-                <button>Изтриване</button>
+
+                {data[0] !== undefined && data[0].owner !== userData.user._id ?
+
+                    <>
+                        {userData.user._id !== undefined ?
+                            <>
+                                <button>Добави в любими</button>
+                                <button>Съобщение</button>
+                            </>
+                            : ''}
+                    </>
+                    : <>
+                        <Link to={`/ad/edit/${data[0] !== undefined ? data[0]._id : ''}`}><button>Редакция</button></Link>
+                        <button>Изтриване</button>
+
+                    </>}
+
             </div>
 
         </div>

@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { login } from '../services/authService';
 import { Navigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import jwt_decode from "jwt-decode";
+import { useContext } from 'react';
+import { userAuth } from '../context/auth';
 
 export function Login() {
 
-    const [ cookie, setCookie ] = useCookies();
+    const userData = useContext(userAuth);
 
     const [input, setInput] = useState({});
 
@@ -22,12 +23,12 @@ export function Login() {
             .then(a => {
 
                 setError(a.response);
-                
+
                 if (a.response === undefined) {
 
-                    setCookie('auth', a.token);
+                    userData.setToken(a.token);
 
-                    setCookie('user', jwt_decode(a.token));
+                    userData.setUser(jwt_decode(a.token));
 
                     setStatus(status => status = a.login);
 

@@ -44,7 +44,7 @@ const login = async (loginData, res) => {
             email: user.email,
         }
 
-        const token = jwt.sign(payloads, secret, { expiresIn: "1h"} );
+        const token = jwt.sign(payloads, secret, { expiresIn: "2d"} );
 
         res.status(200).json({
             login: true,

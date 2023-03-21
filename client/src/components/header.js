@@ -13,7 +13,7 @@ export default function Header() {
                 <p>Добави обява</p>
             </Link>
 
-            <Navigation />
+            <Navigation /* auth={props.auth} *//>
 
         </header>
     )

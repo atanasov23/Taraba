@@ -1,12 +1,15 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AddingPicture } from "./addingPicture";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inputValidation';
 import { userAuth } from "../context/auth";
+import { EditPicture } from "./editPic";
 
-export default function Adding() {
+export function Edit(){
 
     const navigate = useNavigate();
+
+    const params = useParams()
 
     const userData = useContext(userAuth);
 
@@ -15,6 +18,20 @@ export default function Adding() {
     const [input, setInput] = useState({});
 
     const [uploadFile, setFile] = useState("");
+
+    const [ oldData, setOldData ] = useState("");
+
+    useEffect(() => {
+
+        fetch(`http://localhost:1000/ad/edit/${params.id}`)
+        .then(a => a.json())
+        .then(a => {
+
+            setOldData(a);
+
+        });
+
+    }, []);
 
     const sendData = async (e) => {
 
@@ -32,12 +49,12 @@ export default function Adding() {
                 data.append("file", el);
             });
 
-            fetch('http://localhost:1000/adding/ad', {
+            fetch('http://localhost:1000/edit/ad', {
                 method: "POST",
                 body: data,
             });
 
-            fetch('http://localhost:1000/adding/pictures', {
+            fetch('http://localhost:1000/edit/pictures', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -109,6 +126,7 @@ export default function Adding() {
                         onBlur={dataValidation}
                         name="title"
                         value={input.name}
+                        placeholder={oldData.title}
                     />
                 </div>
                 <div className="form-group">
@@ -130,10 +148,11 @@ export default function Adding() {
                         onBlur={dataValidation}
                         name="description"
                         value={input.name}
+                        placeholder={oldData.description}
                     />
                 </div>
 
-                <AddingPicture input={input} onChange={onChange} />
+                <EditPicture input={input} onChange={onChange} oldData={oldData} />
 
                 <div className="form-group">
                     <label htmlFor="">Локация *</label>
@@ -144,6 +163,7 @@ export default function Adding() {
                         onBlur={dataValidation}
                         name="location"
                         value={input.name}
+                        placeholder={oldData.location}
                     />
                 </div>
                 <div className="form-group">
@@ -155,6 +175,7 @@ export default function Adding() {
                         onBlur={dataValidation}
                         name="price"
                         value={input.name}
+                        placeholder={oldData.price}
                     />
                 </div>
                 <div className="form-group">
@@ -167,6 +188,7 @@ export default function Adding() {
                         name='email'
                         onChange={getInputValue}
                         value={userData.user.email}
+                        placeholder={oldData.email}
                         readOnly
 
                     />
@@ -179,9 +201,10 @@ export default function Adding() {
                         name='phone'
                         onChange={getInputValue}
                         value={input.name}
+                        placeholder={oldData.phone}
                     />
                 </div>
-                <button id='adding'>Добави обява</button>
+                <button id='adding'>Редакция</button>
             </form>
         </div>
 

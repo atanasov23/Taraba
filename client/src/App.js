@@ -9,6 +9,9 @@ import Adding from "./components/adding";
 import { CategoryView } from "./components/categoryView";
 import { ContentView } from './components/contentView';
 import { AdDetails } from "./components/adDetails";
+import { useState } from 'react';
+import { userAuth } from "./context/auth";
+import { Edit } from "./components/adEdit";
 
 function Test1() {
     return (
@@ -30,41 +33,55 @@ function Test3() {
 
 function App() {
 
+    const [token, setToken] = useState("");
+
+    const [user, setUser] = useState("");
+
+    const data = {
+        token,
+        setToken,
+        user,
+        setUser
+    }
+
     return (
         <>
-            <Header />
+            <userAuth.Provider value={data}>
 
-            <main>
+                <Header />
 
-                <Routes>
+                <main>
 
-                    
+                    <Routes>
 
-                    <Route path='/' element={<><Search/> <CategoryView/> <ContentView/> </>} />
+                        <Route path='/' element={<><Search /> <CategoryView /> <ContentView /> </>} />
 
-                    <Route path='/details/:id' element={<><Search/><AdDetails/></>} />
+                        <Route path='/details/:id' element={<><Search /><AdDetails /></>} />
 
-                    <Route path='/login' element={<Login />} />
+                        <Route path='/login' element={<Login />} />
 
-                    <Route path='/register' element={<Register />} />
+                        <Route path='/register' element={<Register />} />
 
-                    <Route element={< Auth />}>
+                        <Route path='ad/edit/:id' element={<Edit />}/>
 
-                        <Route path='/user/messages' element={<Test1 />} />
+                        <Route element={< Auth />}>
 
-                        <Route path='/user/fav' element={<Test2 />} />
+                            <Route path='/user/messages' element={<Test1 />} />
 
-                        <Route path='/user/profile' element={<Test3 />} />
+                            <Route path='/user/fav' element={<Test2 />} />
 
-                        <Route path='/adding' element={<Adding />} />
+                            <Route path='/user/profile' element={<Test3 />} />
 
-                    </Route>
+                            <Route path='/adding' element={<Adding />} />
 
-                </Routes>
+                        </Route>
 
-            </main>
+                    </Routes>
 
-            <Footer />
+                </main>
+
+                <Footer />
+            </userAuth.Provider>
         </>
     )
 }
