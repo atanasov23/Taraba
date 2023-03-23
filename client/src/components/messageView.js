@@ -9,9 +9,9 @@ export function MessageView() {
 
     const sender = useRef();
 
-    const [ getMessage, setMessage ] = useState();
+    const [getMessage, setMessage] = useState();
 
-    const [ title, setTitle ] = useState();
+    const [title, setTitle] = useState();
 
     useEffect(() => {
 
@@ -25,7 +25,7 @@ export function MessageView() {
         setTitle(e.target.title);
     }
 
-    
+
 
     function answerToMessage(e) {
 
@@ -46,6 +46,8 @@ export function MessageView() {
         });
     }
 
+    console.log(messages);
+
     return (
 
         <div className="messagesDiv">
@@ -54,8 +56,12 @@ export function MessageView() {
                 return (<div className="messages" key={index} ref={sender}>
                     <span>Обява:</span><p className='title'>{mess.title}</p>
                     <span>Съобщение:</span><p className='textMessage'>{mess.message}</p>
-                    <textarea className="answerMessageArea" placeholder="Отговор" title={mess.title} rows={4} cols={40} onBlur={getAnswer}/>
-                    <button className='answerBtn' onClick={answerToMessage} id={mess.sender}>Отговор</button>
+                    {mess.sender !== userData.user._id ?
+                        <>
+                            < textarea className="answerMessageArea" placeholder="Отговор" title={mess.title} rows={4} cols={40} onBlur={getAnswer} />
+                            <button className='answerBtn' onClick={answerToMessage} id={mess.sender}>Отговор</button>
+                        </>
+                        : ''}
                 </div>
                 )
             })}

@@ -130,11 +130,15 @@ route.post('/sendMessage', async (req, res) => {
 
     const messageData = req.body;
 
-    console.log(messageData);
-
     const user = await User.findById(messageData.recipient);
 
+    const myMessage = await User.findById(messageData.sender);
+
     user.messages.push(messageData);
+
+    myMessage.messages.push(messageData);
+
+    myMessage.save();
 
     user.save();
 })
@@ -150,11 +154,17 @@ route.post('/answerMessage', async (req, res) => {
 
     const messageData = req.body;
 
-    console.log(messageData.recipient);
-
     const user = await User.findById(messageData.recipient);
 
     user.messages.push(messageData);
+
+    const myMessage = await User.findById(messageData.sender);
+
+    user.messages.push(messageData);
+
+    myMessage.messages.push(messageData);
+
+    myMessage.save();
 
     user.save();
 })
