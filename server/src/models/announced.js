@@ -24,21 +24,6 @@ const announced = new mongoose.Schema({
         type: String
     },
     pictures: [String],
-    /* "pic-1": {
-        type: String
-    },
-    "pic-2": {
-        type: String
-    },
-    "pic-3": {
-        type: String
-    },
-    "pic-4": {
-        type: String
-    },
-    "pic-5": {
-        type: String
-    } */
 
 });
 

@@ -1,7 +1,10 @@
 const route = require('express').Router();
 const { login, register } = require('../services/authService');
 const Announced = require('../models/announced');
+const User = require('../models/user');
 const data = new Announced();
+
+/* const user = new User(); */
 
 route.get('/', async (req, res) => {
 
@@ -121,6 +124,39 @@ route.post('/edit/pictures', (req, res) => {
     data.price = userData.price;
 
     data.save();
+})
+
+route.post('/sendMessage', async (req, res) => {
+
+    const messageData = req.body;
+
+    console.log(messageData);
+
+    const user = await User.findById(messageData.recipient);
+
+    user.messages.push(messageData);
+
+    user.save();
+})
+
+route.get('/messages/:id', async (req, res) => {
+
+    const user = await User.findById(req.params.id);
+
+    res.send(user.messages);
+})
+
+route.post('/answerMessage', async (req, res) => {
+
+    const messageData = req.body;
+
+    console.log(messageData.recipient);
+
+    const user = await User.findById(messageData.recipient);
+
+    user.messages.push(messageData);
+
+    user.save();
 })
 
 module.exports = route;

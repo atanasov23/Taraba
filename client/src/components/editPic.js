@@ -2,13 +2,31 @@ import { useState, useEffect } from 'react';
 
 export function EditPicture(props) {
 
-    const [ length, setLength ] = useState(0);
+    /* const [length, setLength] = useState(0); */
+
+    const [ input, setInput ] = useState([]);
 
     useEffect(() => {
 
-         setLength(length => length = 5 - props.oldData.pictures.length);
+       /*  setLength(length => length = 5 - props.oldData.pictures.length); */
 
     }, [])
+    
+
+    if(props.oldData.pictures !== undefined){
+
+        setInput(input => input = Array.from({length: 3}, (_, index) => {
+                return index ;
+              })) 
+
+    }
+
+    console.log(input);
+ /*    const threeHeaders = Array.from({length: 4}, (_, index) => { 
+        return index ;
+      });
+
+      console.log(threeHeaders); */
 
     return (
         <div className="input-box" id='input-box'>
@@ -31,11 +49,8 @@ export function EditPicture(props) {
                         value={props.input.name || ''}
                     />
                 </div>) : ''
-                
+
             }
-
-            {}
-
 
 
         </div>

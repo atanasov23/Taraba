@@ -18,6 +18,9 @@ const userSchema = new mongoose.Schema({
     ownAds: [{
         type: mongoose.Types.ObjectId,
         ref: ['announced']
+    }],
+    messages: [{
+        type: Object
     }]
    
 })

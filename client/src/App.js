@@ -12,6 +12,7 @@ import { AdDetails } from "./components/adDetails";
 import { useState } from 'react';
 import { userAuth } from "./context/auth";
 import { Edit } from "./components/adEdit";
+import { MessageView } from "./components/messageView";
 
 function Test1() {
     return (
@@ -66,7 +67,7 @@ function App() {
 
                         <Route element={< Auth />}>
 
-                            <Route path='/user/messages' element={<Test1 />} />
+                            <Route path='/user/messages' element={<MessageView />} />
 
                             <Route path='/user/fav' element={<Test2 />} />
 

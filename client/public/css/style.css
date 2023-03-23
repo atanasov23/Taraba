@@ -5,6 +5,7 @@
 @import url('./category-container.css');
 @import url('./contentView.css');
 @import url('./adDetails.css');
+@import url('../css/messageView.css');
 
 body {
     width: 100%;

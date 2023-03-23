@@ -61,3 +61,30 @@
     color: white;
     font-size: 20px;
  }
+
+ .messageContainer{
+   position: absolute;
+   left: 75%;
+   height: 400px;
+   width: 350px;
+
+ }
+
+ .sendMessageBtn{
+
+   width: 350px;
+   height: 50px;
+   border: none;
+   margin-top: 5px;
+   left: 20%;
+   background-color: #002f34;
+   color: white;
+   font-size: 20px;
+ }
+ 
+ .messageArea{
+   width: 350px;
+   height: 250px;
+   border: none;
+   font-size: 23px;
+ }
