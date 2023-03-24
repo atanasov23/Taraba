@@ -57,6 +57,13 @@
 }
 
 
+.contentView-container span{
+    position: absolute;
+    font-size: 30px;
+    left: 28%;
+    top: 50%;
+}
+
 
 
 

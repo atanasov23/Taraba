@@ -2,9 +2,7 @@ const route = require('express').Router();
 const { login, register } = require('../services/authService');
 const Announced = require('../models/announced');
 const User = require('../models/user');
-const data = new Announced();
-
-/* const user = new User(); */
+/* const data = new Announced(); */
 
 route.get('/', async (req, res) => {
 
@@ -53,44 +51,25 @@ route.get('/details/:id', async (req, res) => {
 
 });
 
-route.post('/adding/ad', (req, res) => {
+route.post('/adding/image', (req, res) => {
 
-    const files = req.files.file;
+    const file = req.files.file;
 
-    if (Array.from(files).length === 0) {
+    file.mv('./src/uploadFile/' + file.name);
 
-        files.mv('./src/uploadFile/' + files.name);
-
-        data.pictures.push(files.name);
-
-    } else {
-
-        files.map(file => {
-
-            file.mv('./src/uploadFile/' + file.name);
-
-            data.pictures.push(file.name);
-        });
-    }
 })
 
-route.post('/adding/pictures', (req, res) => {
+route.post('/adding/data', (req, res) => {
 
-    const userData = req.body;
+    console.log(req.body);
 
-    data.title = userData.title;
-    data.category = userData.category;
-    data.description = userData.description;
-    data.location = userData.location;
-    data.phone = userData.phone;
-    data.owner = userData.owner;
-    data.price = userData.price;
-
-    data.save();
+    Announced.create(req.body);
+    
 })
 
+route.post('/edit/', (req, res) => {
 
-route.post('/edit/ad', (req, res) => {
+    console.log('da');
 
     const files = req.files.file;
 
@@ -168,5 +147,23 @@ route.post('/answerMessage', async (req, res) => {
 
     user.save();
 })
+
+route.post('/deleteMessage', async (req, res) => {
+
+    const messageData = await User.findById(req.body.user);
+
+   const messages = messageData.messages;
+
+   messageData.messages.map((mess, index) => {
+    if (mess.title === req.body.title) {
+
+        messageData.messages.splice(index, 1);
+
+    }
+});
+
+messageData.save();
+
+});
 
 module.exports = route;

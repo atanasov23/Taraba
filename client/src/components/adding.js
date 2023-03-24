@@ -28,16 +28,14 @@ export default function Adding() {
 
             const data = new FormData();
 
-            uploadFile.forEach(el => {
-                data.append("file", el);
-            });
+            data.append("file", uploadFile[0]);
 
-            fetch('http://localhost:1000/adding/ad', {
+            fetch('http://localhost:1000/adding/image', {
                 method: "POST",
                 body: data,
             });
 
-            fetch('http://localhost:1000/adding/pictures', {
+            fetch('http://localhost:1000/adding/data', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -133,7 +131,24 @@ export default function Adding() {
                     />
                 </div>
 
-                <AddingPicture input={input} onChange={onChange} />
+                {/*  <AddingPicture input={input} onChange={onChange} /> */}
+
+                <div className="image-upload">
+
+                    <div className='option' >
+                        <img alt="" className="del-image" src='image/delete-icon.png' />
+                    </div>
+                    <label htmlFor="image" className='image'>
+                        <img alt="" className="file-input" name="image" src="/image/download-image.png" />
+                    </label>
+                    <input
+                        type="file"
+                        id="image"
+                        onChange={onChange}
+                        name="image"
+                        value={input.name || ''}
+                    />
+                </div>
 
                 <div className="form-group">
                     <label htmlFor="">Локация *</label>

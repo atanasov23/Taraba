@@ -1,7 +1,5 @@
 export function AddingPicture(props) {
 
-    
-
     return (
         <div className="input-box" id='input-box'>
 

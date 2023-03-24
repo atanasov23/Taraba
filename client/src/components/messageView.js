@@ -7,8 +7,6 @@ export function MessageView() {
 
     const [messages, setMessages] = useState([]);
 
-    const sender = useRef();
-
     const [getMessage, setMessage] = useState();
 
     const [title, setTitle] = useState();
@@ -18,14 +16,29 @@ export function MessageView() {
         fetch(`http://localhost:1000/messages/${userData.user._id}`)
             .then(a => a.json())
             .then(a => setMessages(a))
-    }, []);
+
+    }, [messages]);
 
     function getAnswer(e) {
         setMessage(e.target.value);
         setTitle(e.target.title);
     }
 
+    function deleteMessage(e) {
 
+        fetch(`http://localhost:1000/deleteMessage`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'Application/json'
+            },
+            body: JSON.stringify({
+                user: userData.user._id,
+                title: e.target.title
+            })
+
+        });
+
+    }
 
     function answerToMessage(e) {
 
@@ -40,28 +53,30 @@ export function MessageView() {
                 message: getMessage,
                 recipient: sender,
                 sender: userData.user._id,
-                title
+                title,
+                answer: true
             })
 
         });
     }
 
-    console.log(messages);
 
     return (
 
         <div className="messagesDiv">
 
             {messages.length === 0 ? <span>Нямате съобщения</span> : messages.map((mess, index) => {
-                return (<div className="messages" key={index} ref={sender}>
+                return (<div className="messages" key={index} >
                     <span>Обява:</span><p className='title'>{mess.title}</p>
                     <span>Съобщение:</span><p className='textMessage'>{mess.message}</p>
+                    {mess.sender !== userData.user._id ? <span>Получено</span> : <span>Изпратено</span>}
                     {mess.sender !== userData.user._id ?
                         <>
                             < textarea className="answerMessageArea" placeholder="Отговор" title={mess.title} rows={4} cols={40} onBlur={getAnswer} />
                             <button className='answerBtn' onClick={answerToMessage} id={mess.sender}>Отговор</button>
+                            <button className='answerBtn' onClick={deleteMessage} title={mess.title}>Изтриване</button>
                         </>
-                        : ''}
+                        : <button className='answerBtn' onClick={deleteMessage} title={mess.title}>Изтриване</button>}
                 </div>
                 )
             })}

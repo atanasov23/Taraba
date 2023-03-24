@@ -20,7 +20,7 @@ export function AdDetails() {
         fetch(`http://localhost:1000/details/${params.id}`)
             .then(a => a.json())
             .then(a => {
-                setData((data) => [...data, a, a.pictures]);
+                setData(data => data = a);
             });
 
     }, [])
@@ -34,9 +34,9 @@ export function AdDetails() {
             },
             body: JSON.stringify({
                 message: textMessage.current.value,
-                recipient: data[0].owner,
+                recipient: data.owner,
                 sender: userData.user._id,
-                title: data[0].title
+                title: data.title
             })
 
         });
@@ -48,7 +48,7 @@ export function AdDetails() {
     return (
 
         <>
-            {data[0] !== undefined && data[0].owner !== userData.user._id ?
+            {data !== undefined && data.owner !== userData.user._id ?
 
                 <>
                     {userData.user._id !== undefined ?
@@ -64,22 +64,22 @@ export function AdDetails() {
 
             <div className="adDetails">
 
-                <img className="mainPic" src={`http://localhost:1000/${data[1] !== undefined ? data[1][0] : ''}`} ref={mainPicRef} alt="" />
+                <img className="mainPic" src={`http://localhost:1000/${data.image}`} ref={mainPicRef} alt="" />
 
                 <div className="imageGalery">
-                    {data[1] !== undefined ? data[1].map((a, b) => {
+                  {/*   {data[1] !== undefined ? data[1].map((a, b) => {
                         return <img key={b} src={`http://localhost:1000/${a}`} alt="" onClick={changeImage} />
-                    }) : ''}
+                    }) : ''} */}
                 </div>
                 <div className="adData">
-                    <h1>{data[0] !== undefined ? data[0].title : ''}</h1>
-                    <p className="price-2">{data[0] !== undefined ? data[0].price : ''}лв</p>
-                    <p className="description">{data[0] !== undefined ? data[0].description : ''}</p>
+                    <h1>{data!== undefined ? data.title : ''}</h1>
+                    <p className="price-2">{data !== undefined ? data.price : ''}лв</p>
+                    <p className="description">{data !== undefined ? data.description : ''}</p>
                 </div>
 
                 <div className="buttons">
 
-                    {data[0] !== undefined && data[0].owner !== userData.user._id ?
+                    {data !== undefined && data.owner !== userData.user._id ?
 
                         <>
                             {userData.user._id !== undefined ?
@@ -89,7 +89,7 @@ export function AdDetails() {
                                 : ''}
                         </>
                         : <>
-                            <Link to={`/ad/edit/${data[0] !== undefined ? data[0]._id : ''}`}><button>Редакция</button></Link>
+                            <Link to={`/ad/edit/${data !== undefined ? data._id : ''}`}><button>Редакция</button></Link>
                             <button>Изтриване</button>
 
                         </>}

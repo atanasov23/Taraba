@@ -25,7 +25,6 @@ label{
 #addingImage{
     height: 200px;
     width: 200px;
-    background-color: aqua;
     background-image: url('../image/logo.jpg');
 }
 
@@ -77,12 +76,12 @@ select{
     height: 100px;
     width: 100px;
     margin: 10px;
+    top: 20%;
 }
 
 .input-box{
     display: flex;
     height: auto;
-   
 }
 
 .del-image{
@@ -98,7 +97,7 @@ select{
 }
 
 .image-upload{
-    background-color: #F5F5F5;
+    position: relative;
     margin: 2px;
     height: 120px;
 }

@@ -12,11 +12,13 @@ export function ContentView() {
             .then(a => {
                 setFetchData((fetchData) => fetchData = a);
             });
-    }, []);
+    }, [fetchData]);
 
     return (
 
         <div className="contentView-container">
+
+            {fetchData.length === 0 ? <span >Няма обяви за показване...</span> : ''}
 
             {fetchData.map(data => {
 
@@ -24,7 +26,7 @@ export function ContentView() {
                     <Link key={data._id} to={`/details/${data._id}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                         <div className='ad'>
                             <div className="container p-3 my-3 border">
-                                <img src={`http://localhost:1000/${data.pictures[0]}`}></img>
+                                <img src={`http://localhost:1000/${data.image}`}></img>
                                 <div className='textContainer'>
                                     <h1>{data.title}</h1>
                                     <p className='location'>{data.location}</p>

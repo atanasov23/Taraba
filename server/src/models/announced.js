@@ -23,7 +23,9 @@ const announced = new mongoose.Schema({
     price: {
         type: String
     },
-    pictures: [String],
+    image: {
+        type: String
+    }
 
 });
 

@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+/* import { useState, useContext, useEffect } from "react";
 import { AddingPicture } from "./addingPicture";
 import { useNavigate, useParams } from 'react-router-dom'
 import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inputValidation';
@@ -209,4 +209,4 @@ export function Edit(){
         </div>
 
     )
-}
+} */
