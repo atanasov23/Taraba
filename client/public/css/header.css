@@ -87,5 +87,12 @@ header {
     color: white;
     text-decoration: none;
 }
+
+header span{
+  position: relative;
+  font-size: 20px;
+  color: white;
+  left: 82%;
+}
   
   .dropdown:hover .dropdown-content {display: block;}

@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useContext } from "react";
 import { userAuth } from "../context/auth";
@@ -11,9 +11,9 @@ export function AdDetails() {
 
     const [data, setData] = useState([]);
 
-    const mainPicRef = useRef();
-
     const textMessage = useRef();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -43,7 +43,12 @@ export function AdDetails() {
 
     }
 
-    const changeImage = (e) => mainPicRef.current.src = e.target.src;
+    function adDelete() {
+
+        fetch(`http://localhost:1000/adDelete/${params.id}`);
+
+        navigate('/');
+    }
 
     return (
 
@@ -64,15 +69,15 @@ export function AdDetails() {
 
             <div className="adDetails">
 
-                <img className="mainPic" src={`http://localhost:1000/${data.image}`} ref={mainPicRef} alt="" />
+                <img className="mainPic" src={`http://localhost:1000/${data.image}`} alt="" />
 
                 <div className="imageGalery">
-                  {/*   {data[1] !== undefined ? data[1].map((a, b) => {
+                    {/*   {data[1] !== undefined ? data[1].map((a, b) => {
                         return <img key={b} src={`http://localhost:1000/${a}`} alt="" onClick={changeImage} />
                     }) : ''} */}
                 </div>
                 <div className="adData">
-                    <h1>{data!== undefined ? data.title : ''}</h1>
+                    <h1>{data !== undefined ? data.title : ''}</h1>
                     <p className="price-2">{data !== undefined ? data.price : ''}лв</p>
                     <p className="description">{data !== undefined ? data.description : ''}</p>
                 </div>
@@ -90,7 +95,7 @@ export function AdDetails() {
                         </>
                         : <>
                             <Link to={`/ad/edit/${data !== undefined ? data._id : ''}`}><button>Редакция</button></Link>
-                            <button>Изтриване</button>
+                            <button onClick={adDelete}>Изтриване</button>
 
                         </>}
 

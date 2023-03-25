@@ -64,7 +64,7 @@ route.post('/adding/data', (req, res) => {
     console.log(req.body);
 
     Announced.create(req.body);
-    
+
 })
 
 route.post('/edit/', (req, res) => {
@@ -152,18 +152,22 @@ route.post('/deleteMessage', async (req, res) => {
 
     const messageData = await User.findById(req.body.user);
 
-   const messages = messageData.messages;
+    const newArr = messageData.messages.filter(messages => {
 
-   messageData.messages.map((mess, index) => {
-    if (mess.title === req.body.title) {
+        return messages.message !== req.body.message;
+    });
 
-        messageData.messages.splice(index, 1);
+    messageData.messages = newArr;
 
-    }
-});
-
-messageData.save();
+    messageData.save();
 
 });
 
+
+route.get('/adDelete/:id', async (req, res) => {
+
+    const test = await Announced.findByIdAndRemove(req.params.id);
+
+    console.log(test);
+});
 module.exports = route;

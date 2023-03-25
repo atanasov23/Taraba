@@ -10,9 +10,10 @@
 .messages{
     position: relative;
     height: auto;
-    width: 700px;
+    width: 705px;
     background-color: white;
     margin-top: 40px;
+    border: 1px solid;
 }
 
 .title{

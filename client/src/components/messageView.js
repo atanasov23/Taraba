@@ -17,12 +17,14 @@ export function MessageView() {
             .then(a => a.json())
             .then(a => setMessages(a))
 
-    }, [messages]);
+    }, []);
 
     function getAnswer(e) {
         setMessage(e.target.value);
         setTitle(e.target.title);
     }
+
+    console.log(messages);
 
     function deleteMessage(e) {
 
@@ -33,11 +35,17 @@ export function MessageView() {
             },
             body: JSON.stringify({
                 user: userData.user._id,
-                title: e.target.title
+                message: e.target.title
             })
 
         });
 
+        setMessages(data =>
+            data.filter(messages => {
+                // 👇️ remove object that has id equal to 2
+                return messages.message !== e.target.title;
+            }),
+        );
     }
 
     function answerToMessage(e) {
@@ -74,9 +82,9 @@ export function MessageView() {
                         <>
                             < textarea className="answerMessageArea" placeholder="Отговор" title={mess.title} rows={4} cols={40} onBlur={getAnswer} />
                             <button className='answerBtn' onClick={answerToMessage} id={mess.sender}>Отговор</button>
-                            <button className='answerBtn' onClick={deleteMessage} title={mess.title}>Изтриване</button>
+                            <button className='answerBtn' onClick={deleteMessage} title={mess.message}>Изтриване</button>
                         </>
-                        : <button className='answerBtn' onClick={deleteMessage} title={mess.title}>Изтриване</button>}
+                        : <button className='answerBtn' onClick={deleteMessage} title={mess.message}>Изтриване</button>}
                 </div>
                 )
             })}
