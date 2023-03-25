@@ -69,7 +69,7 @@ export function AdDetails() {
 
             <div className="adDetails">
 
-                <img className="mainPic" src={`http://localhost:1000/${data.image}`} alt="" />
+                <img className="mainPic" src={data.image == 'undefined' ? '': `http://localhost:1000/${data.image}`} alt="" />
 
                 <div className="imageGalery">
                     {/*   {data[1] !== undefined ? data[1].map((a, b) => {

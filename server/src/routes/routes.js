@@ -4,11 +4,16 @@ const Announced = require('../models/announced');
 const User = require('../models/user');
 /* const data = new Announced(); */
 
-route.get('/', async (req, res) => {
+route.get('/all', async (req, res) => {
 
     const ad = await Announced.find();
 
     res.send(ad);
+});
+
+route.get('/undefined', async (req, res) => {
+
+    res.send({});
 });
 
 route.get('/ad/edit/:id', async (req, res) => {
@@ -45,7 +50,7 @@ route.get('/details/:id', async (req, res) => {
 
     const adData = await Announced.findById(req.params.id);
 
-    const test = await Announced.find({ owner: '640dfee3490da134b831aa1e' })
+   /*  const test = await Announced.find({ owner: '640dfee3490da134b831aa1e' }) */
 
     res.send(adData);
 
@@ -59,15 +64,38 @@ route.post('/adding/image', (req, res) => {
 
 })
 
-route.post('/adding/data', (req, res) => {
+route.post('/adding/data', async (req, res) => {
 
-    console.log(req.body);
-
-    Announced.create(req.body);
+    await Announced.create(req.body);
 
 })
 
-route.post('/edit/', (req, res) => {
+route.post('/edit/pic', (req, res) => {
+
+    const file = req.files.file;
+
+    file.mv('./src/uploadFile/' + file.name);
+
+})
+
+route.post('/edit/data', async (req, res) => {
+
+    const id = req.body._id;
+
+    const data = req.body;
+
+   await Announced.findByIdAndUpdate(id, {
+        title: data.title,
+        category: data.category,
+        description: data.description,
+        location: data.location,
+        phone: data.phone,
+        price: data.price,
+        image: data.image
+    });
+})
+
+/* route.post('/edit/', (req, res) => {
 
     console.log('da');
 
@@ -103,7 +131,7 @@ route.post('/edit/pictures', (req, res) => {
     data.price = userData.price;
 
     data.save();
-})
+}) */
 
 route.post('/sendMessage', async (req, res) => {
 
@@ -167,7 +195,5 @@ route.post('/deleteMessage', async (req, res) => {
 route.get('/adDelete/:id', async (req, res) => {
 
     const test = await Announced.findByIdAndRemove(req.params.id);
-
-    console.log(test);
 });
 module.exports = route;

@@ -63,8 +63,7 @@ function App() {
 
                         <Route path='/register' element={<Register />} />
 
-                      {/*   <Route path='ad/edit/:id' element={<Edit />}/> */}
-
+                       
                         <Route element={< Auth />}>
 
                             <Route path='/user/messages' element={<MessageView />} />
@@ -72,6 +71,8 @@ function App() {
                             <Route path='/user/fav' element={<Test2 />} />
 
                             <Route path='/user/profile' element={<Test3 />} />
+
+                             <Route path='ad/edit/:id' element={<Edit />}/>
 
                             <Route path='/adding' element={<Adding />} />
 

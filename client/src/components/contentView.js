@@ -7,7 +7,7 @@ export function ContentView() {
 
     useEffect(() => {
 
-        fetch('http://localhost:1000')
+        fetch('http://localhost:1000/all')
             .then(a => a.json())
             .then(a => {
                 setFetchData((fetchData) => fetchData = a);
@@ -18,7 +18,7 @@ export function ContentView() {
 
         <div className="contentView-container">
 
-            {/* {fetchData.length === 0 ? <span >Няма обяви за показване...</span> : ''} */}
+           {/*  {fetchData.length === 0 ? <span >Няма обяви за показване...</span> : ''} */}
 
             {fetchData.map(data => {
 

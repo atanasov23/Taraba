@@ -1,11 +1,10 @@
-/* import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AddingPicture } from "./addingPicture";
 import { useNavigate, useParams } from 'react-router-dom'
 import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inputValidation';
 import { userAuth } from "../context/auth";
-import { EditPicture } from "./editPic";
 
-export function Edit(){
+export function Edit() {
 
     const navigate = useNavigate();
 
@@ -15,21 +14,19 @@ export function Edit(){
 
     const [error, setError] = useState();
 
-    const [input, setInput] = useState({});
-
     const [uploadFile, setFile] = useState("");
 
-    const [ oldData, setOldData ] = useState("");
+    const [oldData, setOldData] = useState("");
 
     useEffect(() => {
 
         fetch(`http://localhost:1000/ad/edit/${params.id}`)
-        .then(a => a.json())
-        .then(a => {
+            .then(a => a.json())
+            .then(a => {
 
-            setOldData(a);
+                setOldData(a);
 
-        });
+            });
 
     }, []);
 
@@ -37,7 +34,9 @@ export function Edit(){
 
         e.preventDefault();
 
-        const checkData = addingEmptyFieldValidation(input);
+        setOldData({ ...oldData, id: params.id });
+
+        const checkData = addingEmptyFieldValidation(oldData);
 
         setError(checkData.err);
 
@@ -45,24 +44,25 @@ export function Edit(){
 
             const data = new FormData();
 
-            uploadFile.forEach(el => {
-                data.append("file", el);
-            });
+            data.append("file", uploadFile[0]);
 
-            fetch('http://localhost:1000/edit/ad', {
-                method: "POST",
-                body: data,
-            });
+            if (data.get('file') !== "undefined") {
 
-            fetch('http://localhost:1000/edit/pictures', {
+                fetch('http://localhost:1000/edit/pic', {
+                    method: "POST",
+                    body: data,
+                });
+            }
+
+            fetch('http://localhost:1000/edit/data', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(input),
+                body: JSON.stringify(oldData),
             });
 
-            navigate('/');
+          navigate(`/details/${params.id}`);
 
         }
     }
@@ -70,17 +70,18 @@ export function Edit(){
     const getInputValue = (e) => {
 
         const name = e.target.name;
+
         const value = e.target.value;
 
-        setInput(values => ({ ...values, ['owner']: userData.user._id }));
+        setOldData(({ ...oldData, [name]: value }));
 
         if (value.startsWith("C")) {
 
-            setInput(values => ({ ...values, [name]: value.replace('C:', "").replace('\\fakepath\\', '') }));
+            setOldData(data => ({ ...data, [name]: value.replace('C:', "").replace('\\fakepath\\', '') }));
 
         } else {
 
-            setInput(values => ({ ...values, [name]: value }));
+            setOldData(data => ({ ...data, [name]: value }));
         }
     }
 
@@ -125,13 +126,12 @@ export function Edit(){
                         onChange={getInputValue}
                         onBlur={dataValidation}
                         name="title"
-                        value={input.name}
-                        placeholder={oldData.title}
+                        value={oldData.title || ''}
                     />
                 </div>
                 <div className="form-group">
                     <label htmlFor="">Категория *</label>
-                    <select onChange={getInputValue} name="category" value={input.name}>
+                    <select onChange={getInputValue} name="category" value={oldData.category}>
                         <option value='electronics'>Електроника</option>
                         <option value='tools'>Инструменти</option>
                         <option value='animals'>Животни</option>
@@ -147,12 +147,26 @@ export function Edit(){
                         onChange={getInputValue}
                         onBlur={dataValidation}
                         name="description"
-                        value={input.name}
-                        placeholder={oldData.description}
+                        value={oldData.description || ''}
+
                     />
                 </div>
 
-                <EditPicture input={input} onChange={onChange} oldData={oldData} />
+                <div className="image-upload">
+
+                    <div className='option' >
+                        <img alt="" className="del-image" src='image/delete-icon.png' />
+                    </div>
+                    <label htmlFor="image" className='image'>
+                        <img alt="" className="file-input" name="image" src={`http://localhost:1000/${oldData.image}`} />
+                    </label>
+                    <input
+                        type="file"
+                        id="image"
+                        onChange={onChange}
+                        name="image"
+                    />
+                </div>
 
                 <div className="form-group">
                     <label htmlFor="">Локация *</label>
@@ -162,8 +176,8 @@ export function Edit(){
                         onChange={getInputValue}
                         onBlur={dataValidation}
                         name="location"
-                        value={input.name}
-                        placeholder={oldData.location}
+                        value={oldData.location || ''}
+
                     />
                 </div>
                 <div className="form-group">
@@ -174,8 +188,8 @@ export function Edit(){
                         onChange={getInputValue}
                         onBlur={dataValidation}
                         name="price"
-                        value={input.name}
-                        placeholder={oldData.price}
+                        value={oldData.price || ''}
+
                     />
                 </div>
                 <div className="form-group">
@@ -188,7 +202,6 @@ export function Edit(){
                         name='email'
                         onChange={getInputValue}
                         value={userData.user.email}
-                        placeholder={oldData.email}
                         readOnly
 
                     />
@@ -200,8 +213,7 @@ export function Edit(){
                         id='phone'
                         name='phone'
                         onChange={getInputValue}
-                        value={input.name}
-                        placeholder={oldData.phone}
+                        value={oldData.phone || ''}
                     />
                 </div>
                 <button id='adding'>Редакция</button>
@@ -209,4 +221,4 @@ export function Edit(){
         </div>
 
     )
-} */
+}
