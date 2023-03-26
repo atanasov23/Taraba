@@ -16,7 +16,7 @@ export default function Adding() {
 
     const [uploadFile, setFile] = useState("");
 
-    const sendData = async (e) => {
+    const sendData =  (e) => {
 
         e.preventDefault();
 
@@ -30,10 +30,13 @@ export default function Adding() {
 
             data.append("file", uploadFile[0]);
 
-            fetch('http://localhost:1000/adding/image', {
-                method: "POST",
-                body: data,
-            });
+            if (data.get('file') !== 'undefined') {
+
+                fetch('http://localhost:1000/adding/image', {
+                    method: "POST",
+                    body: data,
+                });
+            }
 
             fetch('http://localhost:1000/adding/data', {
                 method: "POST",
@@ -42,10 +45,15 @@ export default function Adding() {
                 },
                 body: JSON.stringify(input),
             });
-
-            navigate('/');
-
         }
+
+        userData.setData(data => [...data, input])
+            
+       
+
+       setTimeout(() => {
+         navigate('/');
+       }, 3000)
     }
 
     const getInputValue = (e) => {

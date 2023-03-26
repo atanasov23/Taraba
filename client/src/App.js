@@ -9,7 +9,7 @@ import Adding from "./components/adding";
 import { CategoryView } from "./components/categoryView";
 import { ContentView } from './components/contentView';
 import { AdDetails } from "./components/adDetails";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { userAuth } from "./context/auth";
 import { Edit } from "./components/adEdit";
 import { MessageView } from "./components/messageView";
@@ -22,7 +22,7 @@ function Test1() {
 
 function Test2() {
     return (
-        <h1>Test2</h1>
+        <h1>Test2</h1> 
     )
 }
 
@@ -38,13 +38,30 @@ function App() {
 
     const [user, setUser] = useState("");
 
+    const [fetchData, setFetchData] = useState("");
+    
+    useEffect(() => {
+
+        fetch('http://localhost:1000/all')
+               .then(a => a.json())
+               .then(a => {
+                   setFetchData((fetchData) => fetchData = a);
+               });
+ 
+    }, []);
+
     const data = {
         token,
         setToken,
         user,
-        setUser
+        setUser,
+        fetchData,
+        setData: setFetchData,
+        
     }
 
+
+    console.log(fetchData);
     return (
         <>
             <userAuth.Provider value={data}>

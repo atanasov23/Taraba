@@ -9,21 +9,34 @@ export function AdDetails() {
 
     const params = useParams();
 
-    const [data, setData] = useState([]);
+    const [data, setGetData] = useState([]);
 
     const textMessage = useRef();
 
     const navigate = useNavigate();
 
+    /*     useEffect(() => {
+    
+            console.log(params.id);
+    
+            fetch(`http://localhost:1000/details/${params.id}`)
+                .then(a => a.json())
+                .then(a => {
+                    setGetData(a);
+                });
+    
+        }, [params.id]); */
+
     useEffect(() => {
 
-        fetch(`http://localhost:1000/details/${params.id}`)
-            .then(a => a.json())
-            .then(a => {
-                setData(data => data = a);
-            });
+        const ad = userData.fetchData.filter(data => {
 
-    }, [])
+            if (data.title === params.id) {
+                setGetData(data);
+            }
+        })
+
+    }, []);
 
     function sendMessage() {
 
@@ -47,9 +60,19 @@ export function AdDetails() {
 
         fetch(`http://localhost:1000/adDelete/${params.id}`);
 
+        userData.setData(ads => {
+
+            return ads.filter(ads => {
+
+                return ads.title !== params.id;
+            })
+
+        });
+
         navigate('/');
     }
 
+  
     return (
 
         <>
@@ -69,7 +92,7 @@ export function AdDetails() {
 
             <div className="adDetails">
 
-                <img className="mainPic" src={data.image == 'undefined' ? '': `http://localhost:1000/${data.image}`} alt="" />
+                <img className="mainPic" src={data.image == 'undefined' ? '' : `http://localhost:1000/${data.image}`} alt="" />
 
                 <div className="imageGalery">
                     {/*   {data[1] !== undefined ? data[1].map((a, b) => {
@@ -94,7 +117,7 @@ export function AdDetails() {
                                 : ''}
                         </>
                         : <>
-                            <Link to={`/ad/edit/${data !== undefined ? data._id : ''}`}><button>Редакция</button></Link>
+                            <Link to={`/ad/edit/${data !== undefined ? data.title : ''}`}><button>Редакция</button></Link>
                             <button onClick={adDelete}>Изтриване</button>
 
                         </>}

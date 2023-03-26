@@ -6,19 +6,19 @@ const User = require('../models/user');
 
 route.get('/all', async (req, res) => {
 
-    const ad = await Announced.find();
+    const ad = await  Announced.find();
 
     res.send(ad);
 });
 
-route.get('/undefined', async (req, res) => {
+route.get('/', async (req, res) => {
 
     res.send({});
 });
 
 route.get('/ad/edit/:id', async (req, res) => {
 
-    const ad = await Announced.findById(req.params.id);
+    const ad = await Announced.findOne({title: req.params.id});
 
     res.send(ad);
 });
@@ -56,17 +56,21 @@ route.get('/details/:id', async (req, res) => {
 
 });
 
-route.post('/adding/image', (req, res) => {
+route.post('/adding/image',  (req, res) => {
 
     const file = req.files.file;
 
-    file.mv('./src/uploadFile/' + file.name);
+     file.mv('./src/uploadFile/' + file.name);
+
+     res.status(200).send({})
 
 })
 
 route.post('/adding/data', async (req, res) => {
 
-    await Announced.create(req.body);
+   await Announced.create(req.body);
+
+   res.status(200).send({})
 
 })
 
@@ -76,9 +80,13 @@ route.post('/edit/pic', (req, res) => {
 
     file.mv('./src/uploadFile/' + file.name);
 
+    console.log(2000000);
+
 })
 
 route.post('/edit/data', async (req, res) => {
+
+    
 
     const id = req.body._id;
 
@@ -194,6 +202,8 @@ route.post('/deleteMessage', async (req, res) => {
 
 route.get('/adDelete/:id', async (req, res) => {
 
-    const test = await Announced.findByIdAndRemove(req.params.id);
+    const test = await Announced.findOneAndRemove({title: req.params.id});
+
+    res.status(200).send({});
 });
 module.exports = route;

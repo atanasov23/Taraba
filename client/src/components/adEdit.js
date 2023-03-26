@@ -1,8 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import { AddingPicture } from "./addingPicture";
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Navigate } from 'react-router-dom'
 import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inputValidation';
 import { userAuth } from "../context/auth";
+
 
 export function Edit() {
 
@@ -18,23 +19,35 @@ export function Edit() {
 
     const [oldData, setOldData] = useState("");
 
+    /*     useEffect(() => {
+    
+            fetch(`http://localhost:1000/ad/edit/${params.id}`)
+                .then(a => a.json())
+                .then(a => {
+    
+                    setOldData(a);
+    
+                });
+    
+        }, []); */
+
     useEffect(() => {
 
-        fetch(`http://localhost:1000/ad/edit/${params.id}`)
-            .then(a => a.json())
-            .then(a => {
+        const ad = userData.fetchData.filter(data => {
 
-                setOldData(a);
-
-            });
+            if (data.title === params.id) {
+                setOldData(data);
+            }
+        })
 
     }, []);
+
 
     const sendData = async (e) => {
 
         e.preventDefault();
 
-        setOldData({ ...oldData, id: params.id });
+        /* setOldData({ ...oldData, id: params.id }); */
 
         const checkData = addingEmptyFieldValidation(oldData);
 
@@ -62,10 +75,59 @@ export function Edit() {
                 body: JSON.stringify(oldData),
             });
 
-          navigate(`/details/${params.id}`);
+
+            updateState();
+            /* userData.setData(data => [...data, oldData]); */
+
+
+            setTimeout(() => {
+                navigate(`/details/${params.id}`);
+
+            }, 2000)
+
+
 
         }
     }
+
+
+    /* /*      const newState = userData.fetchData.map(obj => {
+             // 👇️ if id equals 2, update country property
+             if (obj.id === params.id) {
+                 return { ...obj, title: oldData.title, };
+             }
+ 
+             // 👇️ otherwise return the object as is
+             return obj;
+         });
+  */
+
+
+    const updateState = () => {
+        const newState = userData.fetchData.map(obj => {
+            // 👇️ if id equals 2, update country property
+
+            if (obj.title === params.id) {
+
+                return {
+                    ...obj,
+                    title: oldData.title,
+                    category: oldData.category,
+                    description: oldData.description,
+                    location: oldData.location,
+                    phone: oldData.phone,
+                    price: oldData.price,
+                    image: oldData.image
+                };
+            }
+
+            // 👇️ otherwise return the object as is
+            return obj;
+        });
+
+        userData.setData(newState);
+    };
+
 
     const getInputValue = (e) => {
 
@@ -118,7 +180,7 @@ export function Edit() {
         <div className="addingContainer">
             <span>Добави обява</span>
             <div id='error'>{error}</div>
-            <form onSubmit={sendData}>
+            <form onSubmit={sendData} method="POST">
                 <div className="form-group">
                     <label htmlFor="title">Заглавие *</label>
                     <input className="form-input"
