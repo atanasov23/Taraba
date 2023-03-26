@@ -13,11 +13,10 @@ const userSchema = new mongoose.Schema({
     },
     favorite: [{
         type: mongoose.Types.ObjectId,
-        ref: ['announced']
+        ref: ['Announced']
     }],
     ownAds: [{
-        type: mongoose.Types.ObjectId,
-        ref: ['announced']
+        type: Object
     }],
     messages: [{
         type: Object

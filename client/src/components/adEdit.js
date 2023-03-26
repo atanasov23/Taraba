@@ -80,28 +80,13 @@ export function Edit() {
             /* userData.setData(data => [...data, oldData]); */
 
 
-            setTimeout(() => {
-                navigate(`/details/${params.id}`);
+           
+                navigate('/');
 
-            }, 2000)
-
-
+          
 
         }
     }
-
-
-    /* /*      const newState = userData.fetchData.map(obj => {
-             // 👇️ if id equals 2, update country property
-             if (obj.id === params.id) {
-                 return { ...obj, title: oldData.title, };
-             }
- 
-             // 👇️ otherwise return the object as is
-             return obj;
-         });
-  */
-
 
     const updateState = () => {
         const newState = userData.fetchData.map(obj => {

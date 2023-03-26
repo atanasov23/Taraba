@@ -30,6 +30,7 @@ export default function Adding() {
 
             data.append("file", uploadFile[0]);
 
+    
             if (data.get('file') !== 'undefined') {
 
                 fetch('http://localhost:1000/adding/image', {
@@ -45,15 +46,26 @@ export default function Adding() {
                 },
                 body: JSON.stringify(input),
             });
+
+            fetch('http://localhost:1000/my/ads', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(input),
+            });
         }
 
         userData.setData(data => [...data, input])
             
        
 
-       setTimeout(() => {
-         navigate('/');
-       }, 3000)
+        setTimeout(() => {
+
+             navigate('/');
+        }, 3000)
+        
+       
     }
 
     const getInputValue = (e) => {

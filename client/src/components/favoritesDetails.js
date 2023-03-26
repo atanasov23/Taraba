@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useContext } from "react";
 import { userAuth } from "../context/auth";
 
-export function AdDetails() {
+export function FavoritesDetails() {
 
     const userData = useContext(userAuth);
 
@@ -46,7 +46,7 @@ export function AdDetails() {
 
     function adDelete() {
 
-       fetch(`http://localhost:1000/adDelete/${params.id}`);
+        fetch(`http://localhost:1000/adDelete/${params.id}`);
 
         userData.setData(ads => {
 
@@ -57,24 +57,21 @@ export function AdDetails() {
 
         });
 
-        
-        setTimeout(() => {
-
-            navigate('/');
-       }, 3000)
+       
     }
 
+    function removeFromFav() {
 
-    function addToFav(){
+        fetch(`http://localhost:1000/removeFav/${data._id}/${userData.user._id}`);
 
-        fetch(`http://localhost:1000/addFav/${data._id}/${userData.user._id}`)
-
+       
     }
 
 
     return (
 
         <>
+           {data.length === 0 ? 'Нямате любими' : 'aad'}
             {data !== undefined && data.owner !== userData.user._id ?
 
                 <>
@@ -94,9 +91,7 @@ export function AdDetails() {
                 <img className="mainPic" src={data.image == 'undefined' ? '' : `http://localhost:1000/${data.image}`} alt="" />
 
                 <div className="imageGalery">
-                    {/*   {data[1] !== undefined ? data[1].map((a, b) => {
-                        return <img key={b} src={`http://localhost:1000/${a}`} alt="" onClick={changeImage} />
-                    }) : ''} */}
+
                 </div>
                 <div className="adData">
                     <h1>{data !== undefined ? data.title : ''}</h1>
@@ -106,20 +101,7 @@ export function AdDetails() {
 
                 <div className="buttons">
 
-                    {data !== undefined && data.owner !== userData.user._id ?
-
-                        <>
-                            {userData.user._id !== undefined && data.owner !== userData.user._id?
-                                <>
-                                    <button onClick={addToFav}>Добави в любими</button>
-                                </>
-                                : ''}
-                        </>
-                        : <>
-                            <Link to={`/ad/edit/${data !== undefined ? data.title : ''}`}><button>Редакция</button></Link>
-                            <button onClick={adDelete}>Изтриване</button>
-
-                        </>}
+                    <button onClick={removeFromFav}>Премахване от любими</button>
 
                 </div>
 

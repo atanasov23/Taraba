@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { userAuth } from "../context/auth";
 import { useContext } from "react";
+import { Logout } from "./logout";
 
 export function Navigation() {
 
@@ -22,7 +23,8 @@ export function Navigation() {
                         <>
                             <Link to="/user/messages">Съобщения</Link>
                             <Link to="/user/fav">Любими</Link>
-                            <Link to="#">Излизане</Link>
+                            <Link to="/user/ads">Моите обяви</Link>
+                            <Link to="/logout">Излизане</Link>
                         </>
                     }
                 </div>

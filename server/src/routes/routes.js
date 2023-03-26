@@ -11,10 +11,6 @@ route.get('/all', async (req, res) => {
     res.send(ad);
 });
 
-route.get('/', async (req, res) => {
-
-    res.send({});
-});
 
 route.get('/ad/edit/:id', async (req, res) => {
 
@@ -33,6 +29,7 @@ route.post('/user/register', async (req, res) => {
 
         res.status(200).json({ register: true });
     }
+
 });
 
 route.post('/user/login', async (req, res) => {
@@ -62,15 +59,11 @@ route.post('/adding/image',  (req, res) => {
 
      file.mv('./src/uploadFile/' + file.name);
 
-     res.status(200).send({})
-
 })
 
 route.post('/adding/data', async (req, res) => {
 
    await Announced.create(req.body);
-
-   res.status(200).send({})
 
 })
 
@@ -80,13 +73,10 @@ route.post('/edit/pic', (req, res) => {
 
     file.mv('./src/uploadFile/' + file.name);
 
-    console.log(2000000);
 
 })
 
 route.post('/edit/data', async (req, res) => {
-
-    
 
     const id = req.body._id;
 
@@ -101,6 +91,7 @@ route.post('/edit/data', async (req, res) => {
         price: data.price,
         image: data.image
     });
+
 })
 
 /* route.post('/edit/', (req, res) => {
@@ -156,6 +147,7 @@ route.post('/sendMessage', async (req, res) => {
     myMessage.save();
 
     user.save();
+
 })
 
 route.get('/messages/:id', async (req, res) => {
@@ -163,6 +155,7 @@ route.get('/messages/:id', async (req, res) => {
     const user = await User.findById(req.params.id);
 
     res.send(user.messages);
+
 })
 
 route.post('/answerMessage', async (req, res) => {
@@ -182,6 +175,7 @@ route.post('/answerMessage', async (req, res) => {
     myMessage.save();
 
     user.save();
+
 })
 
 route.post('/deleteMessage', async (req, res) => {
@@ -204,6 +198,60 @@ route.get('/adDelete/:id', async (req, res) => {
 
     const test = await Announced.findOneAndRemove({title: req.params.id});
 
-    res.status(200).send({});
 });
+
+route.get('/addFav/:title/:id', async (req, res) => {
+
+    const user = await User.findById(req.params.id);
+
+    user.favorite.push(req.params.title);
+
+    user.save();
+})
+
+route.get('/fav/:id', async (req, res) => {
+
+    const user = await  User.findById(req.params.id).populate('favorite');
+
+    res.send(user.favorite);
+
+})
+
+
+route.get('/removeFav/:id/:user', async (req, res) => {
+
+    const user = await User.findById(req.params.user)
+
+    const newArr = user.favorite.filter(fav => {
+
+        return String(fav) !== req.params.id;
+    });
+
+    user.favorite = newArr;
+
+    user.save();
+    
+});
+
+route.post('/my/ads', async (req, res) => {
+
+    const data = req.body;
+
+    const user = await User.findById(data.owner);
+
+    user.ownAds.push(data);
+
+    user.save();
+
+});
+
+route.get('/myAds/:id', async (req, res) => {
+
+    const user = await User.findById(req.params.id);
+
+    res.send(user.ownAds).status(200);
+
+    res.end();
+})
+
 module.exports = route;
