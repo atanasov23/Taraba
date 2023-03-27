@@ -44,34 +44,19 @@ export function FavoritesDetails() {
 
     }
 
-    function adDelete() {
-
-        fetch(`http://localhost:1000/adDelete/${params.id}`);
-
-        userData.setData(ads => {
-
-            return ads.filter(ads => {
-
-                return ads.title !== params.id;
-            })
-
-        });
-
-       
-    }
-
     function removeFromFav() {
 
         fetch(`http://localhost:1000/removeFav/${data._id}/${userData.user._id}`);
 
-       
+        navigate('/user/fav');
     }
 
-
+   
     return (
 
         <>
-           {data.length === 0 ? 'Нямате любими' : 'aad'}
+            
+            {data.length === 0 ? 'Нямате любими' : ''}
             {data !== undefined && data.owner !== userData.user._id ?
 
                 <>
@@ -87,7 +72,7 @@ export function FavoritesDetails() {
                 : ""}
 
             <div className="adDetails">
-
+                
                 <img className="mainPic" src={data.image == 'undefined' ? '' : `http://localhost:1000/${data.image}`} alt="" />
 
                 <div className="imageGalery">

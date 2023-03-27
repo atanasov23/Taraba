@@ -19,23 +19,11 @@ export function Edit() {
 
     const [oldData, setOldData] = useState("");
 
-    /*     useEffect(() => {
-    
-            fetch(`http://localhost:1000/ad/edit/${params.id}`)
-                .then(a => a.json())
-                .then(a => {
-    
-                    setOldData(a);
-    
-                });
-    
-        }, []); */
-
     useEffect(() => {
 
-        const ad = userData.fetchData.filter(data => {
+        userData.fetchData.filter(data => {
 
-            if (data.title === params.id) {
+            if (data._id === params.id) {
                 setOldData(data);
             }
         })
@@ -43,11 +31,9 @@ export function Edit() {
     }, []);
 
 
-    const sendData = async (e) => {
+    const sendData = (e) => {
 
         e.preventDefault();
-
-        /* setOldData({ ...oldData, id: params.id }); */
 
         const checkData = addingEmptyFieldValidation(oldData);
 
@@ -75,24 +61,15 @@ export function Edit() {
                 body: JSON.stringify(oldData),
             });
 
-
             updateState();
-            /* userData.setData(data => [...data, oldData]); */
-
-
-           
-                navigate('/');
-
-          
-
         }
     }
 
     const updateState = () => {
-        const newState = userData.fetchData.map(obj => {
-            // 👇️ if id equals 2, update country property
 
-            if (obj.title === params.id) {
+        const newState = userData.fetchData.map(obj => {
+
+            if (obj._id === params.id) {
 
                 return {
                     ...obj,
@@ -106,11 +83,13 @@ export function Edit() {
                 };
             }
 
-            // 👇️ otherwise return the object as is
             return obj;
         });
 
         userData.setData(newState);
+
+        navigate(`/details/${params.id}`);
+
     };
 
 

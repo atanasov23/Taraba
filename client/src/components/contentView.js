@@ -6,14 +6,15 @@ export function ContentView() {
 
     const data = useContext(userAuth);
   
-    const [ state, setState ] = useState(data.fetchData);
+   /*  const [ state, setState ] = useState(data.fetchData);
 
     useEffect(() => {
 
         setState(state => state = data.fetchData);
 
-    }, [data.fetchData]);
+    }, [data.fetchData]); */
 
+    console.log(data.fetchData);
 
     return (
 
@@ -21,10 +22,10 @@ export function ContentView() {
 
             {/*  {data.fetchData[0] === 'undefined' ? */}  {/* : ''} */}
 
-            {data.fetchData?.length  > 1 ? data.fetchData.map((data, i) => {
+            {/* data.fetchData?.length  > 1 ?  */data.fetchData.map((data, i) => {
 
                 return (
-                    <Link key={i} to={`/details/${data.title}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                    <Link key={i} to={`/details/${data._id}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                         <div className='ad'>
                             <div className="container p-3 my-3 border">
                                 <img src={`http://localhost:1000/${data.image}`} alt=""></img>
@@ -38,9 +39,9 @@ export function ContentView() {
                         </div>
                     </Link>
                 )
-            }) : ''}
+            })/*  : '' */}
 
-            {data.fetchData?.length  === 1 ? <Link to={`/details/${data.fetchData[0].title}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+           {/*  {data.fetchData?.length  === 1 ? <Link to={`/details/${data.fetchData[0].title}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                 <div className='ad'>
                     <div className="container p-3 my-3 border">
                         <img src={`http://localhost:1000/${data.fetchData[0].image}`} alt=""></img>
@@ -52,10 +53,10 @@ export function ContentView() {
                         </div>
                     </div>
                 </div>
-            </Link> : ''}
+            </Link> : ''} */}
 
 
-            {data.fetchData == "" ? <span >Няма обяви за показване...</span> : ''}
+            {data.fetchData.length === 0 ? <span >Няма обяви за показване...</span> : ''}
 
            {/*  {data.fetchData ?.length === 0 ? <span >Няма обяви за показване...</span> : ''} */}
 

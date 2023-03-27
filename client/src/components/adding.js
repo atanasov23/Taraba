@@ -58,13 +58,8 @@ export default function Adding() {
 
         userData.setData(data => [...data, input])
             
-       
-
-        setTimeout(() => {
-
              navigate('/');
-        }, 3000)
-        
+    
        
     }
 

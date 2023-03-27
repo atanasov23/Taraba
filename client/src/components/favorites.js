@@ -19,7 +19,7 @@ export function Favorites() {
 
         <div className="contentView-container">
 
-            {fav?.length > 1 ? fav.map((data, i) => {
+            {fav.map((data, i) => {
 
                 return (
                     <Link key={i} to={`/favorite/details/${data.title}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
@@ -30,29 +30,14 @@ export function Favorites() {
                                     <h1>{data.title}</h1>
                                     <p className='location'>{data.location}</p>
                                     <p className='price'>{data.price}лв</p>
-
                                 </div>
                             </div>
                         </div>
                     </Link>
                 )
-            }) : ''}
+            })}
 
-            {fav?.length === 1 ? <Link to={`/favorite/details/${fav[0].title}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
-                <div className='ad'>
-                    <div className="container p-3 my-3 border">
-                        <img src={`http://localhost:1000/${fav[0].image}`} alt=""></img>
-                        <div className='textContainer'>
-                            <h1>{fav[0].title}</h1>
-                            <p className='location'>{fav[0].location}</p>
-                            <p className='price'>{fav[0].price}лв</p>
-
-                        </div>
-                    </div>
-                </div>
-            </Link> : ''}
-
-            {fav == "" ? <span >Нямате любими...</span> : ''}
+            {fav.length === 0 ? <span >Нямате любими...</span> : ''}
 
         </div>
     )

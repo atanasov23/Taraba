@@ -19,7 +19,8 @@ export function AdDetails() {
 
         const ad = userData.fetchData.filter(data => {
 
-            if (data.title === params.id) {
+            if (data._id === params.id) {
+
                 setGetData(data);
             }
         })
@@ -46,26 +47,22 @@ export function AdDetails() {
 
     function adDelete() {
 
-       fetch(`http://localhost:1000/adDelete/${params.id}`);
+        fetch(`http://localhost:1000/adDelete/${params.id}`);
 
         userData.setData(ads => {
 
             return ads.filter(ads => {
 
-                return ads.title !== params.id;
+                return ads._id !== params.id;
             })
 
         });
 
-        
-        setTimeout(() => {
+        navigate('/');
 
-            navigate('/');
-       }, 3000)
     }
 
-
-    function addToFav(){
+    function addToFav() {
 
         fetch(`http://localhost:1000/addFav/${data._id}/${userData.user._id}`)
 
@@ -75,7 +72,7 @@ export function AdDetails() {
     return (
 
         <>
-            {data !== undefined && data.owner !== userData.user._id ?
+            {data.owner !== userData.user._id ?
 
                 <>
                     {userData.user._id !== undefined ?
@@ -94,9 +91,7 @@ export function AdDetails() {
                 <img className="mainPic" src={data.image == 'undefined' ? '' : `http://localhost:1000/${data.image}`} alt="" />
 
                 <div className="imageGalery">
-                    {/*   {data[1] !== undefined ? data[1].map((a, b) => {
-                        return <img key={b} src={`http://localhost:1000/${a}`} alt="" onClick={changeImage} />
-                    }) : ''} */}
+
                 </div>
                 <div className="adData">
                     <h1>{data !== undefined ? data.title : ''}</h1>
@@ -109,14 +104,14 @@ export function AdDetails() {
                     {data !== undefined && data.owner !== userData.user._id ?
 
                         <>
-                            {userData.user._id !== undefined && data.owner !== userData.user._id?
+                            {userData.user._id !== undefined && data.owner !== userData.user._id ?
                                 <>
                                     <button onClick={addToFav}>Добави в любими</button>
                                 </>
                                 : ''}
                         </>
                         : <>
-                            <Link to={`/ad/edit/${data !== undefined ? data.title : ''}`}><button>Редакция</button></Link>
+                            <Link to={`/ad/edit/${data !== undefined ? data._id : ''}`}><button>Редакция</button></Link>
                             <button onClick={adDelete}>Изтриване</button>
 
                         </>}

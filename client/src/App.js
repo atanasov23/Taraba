@@ -18,21 +18,14 @@ import { FavoritesDetails } from "./components/favoritesDetails";
 import { Logout } from "./components/logout";
 import { MyAds } from "./components/myAds";
 
-function Test1() {
-    return (
-        <h1>Test1</h1>
-    )
-}
-
-
 function App() {
 
     const [token, setToken] = useState("");
 
     const [user, setUser] = useState("");
 
-    const [fetchData, setFetchData] = useState("");
-
+    const [fetchData, setFetchData] = useState([]);
+    
     useEffect(() => {
 
         fetch('http://localhost:1000/all')

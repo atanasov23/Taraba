@@ -82,6 +82,8 @@ route.post('/edit/data', async (req, res) => {
 
     const data = req.body;
 
+    console.log(2000);
+
    await Announced.findByIdAndUpdate(id, {
         title: data.title,
         category: data.category,
@@ -91,6 +93,8 @@ route.post('/edit/data', async (req, res) => {
         price: data.price,
         image: data.image
     });
+
+    res.send({});
 
 })
 
@@ -196,11 +200,13 @@ route.post('/deleteMessage', async (req, res) => {
 
 route.get('/adDelete/:id', async (req, res) => {
 
-    const test = await Announced.findOneAndRemove({title: req.params.id});
+    const test = await Announced.findByIdAndRemove(req.params.id);
 
 });
 
 route.get('/addFav/:title/:id', async (req, res) => {
+
+    console.log(50000);
 
     const user = await User.findById(req.params.id);
 
@@ -210,6 +216,8 @@ route.get('/addFav/:title/:id', async (req, res) => {
 })
 
 route.get('/fav/:id', async (req, res) => {
+
+    
 
     const user = await  User.findById(req.params.id).populate('favorite');
 
@@ -253,5 +261,7 @@ route.get('/myAds/:id', async (req, res) => {
 
     res.end();
 })
+
+
 
 module.exports = route;
