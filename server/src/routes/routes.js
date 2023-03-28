@@ -59,12 +59,15 @@ route.post('/adding/image',  (req, res) => {
 
      file.mv('./src/uploadFile/' + file.name);
 
+     res.send({});
+
 })
 
 route.post('/adding/data', async (req, res) => {
 
-   await Announced.create(req.body);
+   const newAd = await Announced.create(req.body);
 
+   res.send(newAd);
 })
 
 route.post('/edit/pic', (req, res) => {
@@ -82,9 +85,7 @@ route.post('/edit/data', async (req, res) => {
 
     const data = req.body;
 
-    console.log(2000);
-
-   await Announced.findByIdAndUpdate(id, {
+    await Announced.findByIdAndUpdate(id, {
         title: data.title,
         category: data.category,
         description: data.description,
@@ -93,8 +94,6 @@ route.post('/edit/data', async (req, res) => {
         price: data.price,
         image: data.image
     });
-
-    res.send({});
 
 })
 
@@ -172,7 +171,7 @@ route.post('/answerMessage', async (req, res) => {
 
     const myMessage = await User.findById(messageData.sender);
 
-    user.messages.push(messageData);
+    /* user.messages.push(messageData); */
 
     myMessage.messages.push(messageData);
 
@@ -205,8 +204,6 @@ route.get('/adDelete/:id', async (req, res) => {
 });
 
 route.get('/addFav/:title/:id', async (req, res) => {
-
-    console.log(50000);
 
     const user = await User.findById(req.params.id);
 

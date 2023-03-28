@@ -19,7 +19,7 @@ export function FavoritesDetails() {
 
         const ad = userData.fetchData.filter(data => {
 
-            if (data.title === params.id) {
+            if (data._id === params.id) {
                 setGetData(data);
             }
         })

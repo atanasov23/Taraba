@@ -16,13 +16,15 @@ export default function Adding() {
 
     const [uploadFile, setFile] = useState("");
 
-    const sendData =  (e) => {
+    const sendData =  async (e) => {
 
         e.preventDefault();
 
         const checkData = addingEmptyFieldValidation(input);
 
         setError(checkData.err);
+
+        let adId = {};
 
         if (checkData.send && error === undefined) {
 
@@ -39,7 +41,7 @@ export default function Adding() {
                 });
             }
 
-            fetch('http://localhost:1000/adding/data', {
+            adId = fetch('http://localhost:1000/adding/data', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -55,6 +57,9 @@ export default function Adding() {
                 body: JSON.stringify(input),
             });
         }
+
+        await adId.then(a => a.json()).then(a => input._id = a._id)
+
 
         userData.setData(data => [...data, input])
             

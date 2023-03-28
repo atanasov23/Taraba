@@ -22,7 +22,7 @@ export function Favorites() {
             {fav.map((data, i) => {
 
                 return (
-                    <Link key={i} to={`/favorite/details/${data.title}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                    <Link key={i} to={`/favorite/details/${data._id}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                         <div className='ad'>
                             <div className="container p-3 my-3 border">
                                 <img src={`http://localhost:1000/${data.image}`} alt=""></img>

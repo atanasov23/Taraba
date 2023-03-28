@@ -14,8 +14,6 @@ export function ContentView() {
 
     }, [data.fetchData]); */
 
-    console.log(data.fetchData);
-
     return (
 
         <div className="contentView-container">

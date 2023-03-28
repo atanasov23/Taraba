@@ -24,8 +24,6 @@ export function MessageView() {
         setTitle(e.target.title);
     }
 
-    console.log(messages);
-
     function deleteMessage(e) {
 
         fetch(`http://localhost:1000/deleteMessage`, {
@@ -42,7 +40,6 @@ export function MessageView() {
 
         setMessages(data =>
             data.filter(messages => {
-                // 👇️ remove object that has id equal to 2
                 return messages.message !== e.target.title;
             }),
         );

@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 const routes = require('./routes/routes');
+const timeout = require('connect-timeout')
 
 try {
 
@@ -11,6 +12,8 @@ try {
     console.log('Connected to the base');
 
     const server = express();
+
+    server.use(timeout('3s'))
 
     server.use(express.static('src/uploadFile'));
 
