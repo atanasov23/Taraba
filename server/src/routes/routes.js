@@ -2,22 +2,12 @@ const route = require('express').Router();
 const { login, register } = require('../services/authService');
 const Announced = require('../models/announced');
 const User = require('../models/user');
-/* const data = new Announced(); */
 
-route.get('/all', async (req, res) => {
+route.get('/all', async (req, res) => res.send(await Announced.find()));
 
-    const ad = await  Announced.find();
+route.get('/undefined', (req, res) => res.status(200).send({}));
 
-    res.send(ad);
-});
-
-
-route.get('/ad/edit/:id', async (req, res) => {
-
-    const ad = await Announced.findOne({title: req.params.id});
-
-    res.send(ad);
-});
+route.get('/ad/edit/:id', async (req, res) => res.send(await Announced.findOne({ title: req.params.id })));
 
 route.post('/user/register', async (req, res) => {
 
@@ -34,7 +24,6 @@ route.post('/user/register', async (req, res) => {
 
 route.post('/user/login', async (req, res) => {
 
-
     if (await login(req.body, res)) {
 
         res.status(200).json({ response: "Username or password is incorrect" });
@@ -43,32 +32,19 @@ route.post('/user/login', async (req, res) => {
 
 });
 
-route.get('/details/:id', async (req, res) => {
+route.get('/details/:id', async (req, res) => res.send(await Announced.findById(req.params.id)));
 
-    const adData = await Announced.findById(req.params.id);
-
-   /*  const test = await Announced.find({ owner: '640dfee3490da134b831aa1e' }) */
-
-    res.send(adData);
-
-});
-
-route.post('/adding/image',  (req, res) => {
+route.post('/adding/image', (req, res) => {
 
     const file = req.files.file;
 
-     file.mv('./src/uploadFile/' + file.name);
+    file.mv('./src/uploadFile/' + file.name);
 
-     res.send({});
+    res.status(200).send({})
 
 })
 
-route.post('/adding/data', async (req, res) => {
-
-   const newAd = await Announced.create(req.body);
-
-   res.send(newAd);
-})
+route.post('/adding/data', async (req, res) => res.status(200).send(await Announced.create(req.body)));
 
 route.post('/edit/pic', (req, res) => {
 
@@ -76,64 +52,17 @@ route.post('/edit/pic', (req, res) => {
 
     file.mv('./src/uploadFile/' + file.name);
 
+    res.status(200).send({})
 
 })
 
 route.post('/edit/data', async (req, res) => {
 
-    const id = req.body._id;
+    await Announced.findByIdAndUpdate(req.body._id, req.body);
 
-    const data = req.body;
+    res.status(200).send({})
 
-    await Announced.findByIdAndUpdate(id, {
-        title: data.title,
-        category: data.category,
-        description: data.description,
-        location: data.location,
-        phone: data.phone,
-        price: data.price,
-        image: data.image
-    });
-
-})
-
-/* route.post('/edit/', (req, res) => {
-
-    console.log('da');
-
-    const files = req.files.file;
-
-    if (Array.from(files).length === 0) {
-
-        files.mv('./src/uploadFile/' + files.name);
-
-        data.pictures.push(files.name);
-
-    } else {
-
-        files.map(file => {
-
-            file.mv('./src/uploadFile/' + file.name);
-
-            data.pictures.push(file.name);
-        });
-    }
-})
-
-route.post('/edit/pictures', (req, res) => {
-
-    const userData = req.body;
-
-    data.title = userData.title;
-    data.category = userData.category;
-    data.description = userData.description;
-    data.location = userData.location;
-    data.phone = userData.phone;
-    data.owner = userData.owner;
-    data.price = userData.price;
-
-    data.save();
-}) */
+});
 
 route.post('/sendMessage', async (req, res) => {
 
@@ -153,13 +82,7 @@ route.post('/sendMessage', async (req, res) => {
 
 })
 
-route.get('/messages/:id', async (req, res) => {
-
-    const user = await User.findById(req.params.id);
-
-    res.send(user.messages);
-
-})
+route.get('/messages/:id', async (req, res) =>  res.send(await User.findById(req.params.id).messages));
 
 route.post('/answerMessage', async (req, res) => {
 
@@ -170,8 +93,6 @@ route.post('/answerMessage', async (req, res) => {
     user.messages.push(messageData);
 
     const myMessage = await User.findById(messageData.sender);
-
-    /* user.messages.push(messageData); */
 
     myMessage.messages.push(messageData);
 
@@ -197,11 +118,8 @@ route.post('/deleteMessage', async (req, res) => {
 });
 
 
-route.get('/adDelete/:id', async (req, res) => {
+route.get('/adDelete/:id', async (req, res) => res.status(200).send(await Announced.findByIdAndRemove(req.params.id)));
 
-    const test = await Announced.findByIdAndRemove(req.params.id);
-
-});
 
 route.get('/addFav/:title/:id', async (req, res) => {
 
@@ -212,16 +130,7 @@ route.get('/addFav/:title/:id', async (req, res) => {
     user.save();
 })
 
-route.get('/fav/:id', async (req, res) => {
-
-    
-
-    const user = await  User.findById(req.params.id).populate('favorite');
-
-    res.send(user.favorite);
-
-})
-
+route.get('/fav/:id', async (req, res) => res.send(await User.findById(req.params.id).populate('favorite').favorite));
 
 route.get('/removeFav/:id/:user', async (req, res) => {
 
@@ -235,7 +144,7 @@ route.get('/removeFav/:id/:user', async (req, res) => {
     user.favorite = newArr;
 
     user.save();
-    
+
 });
 
 route.post('/my/ads', async (req, res) => {
@@ -248,6 +157,8 @@ route.post('/my/ads', async (req, res) => {
 
     user.save();
 
+    res.status(200).send({})
+
 });
 
 route.get('/myAds/:id', async (req, res) => {
@@ -256,9 +167,6 @@ route.get('/myAds/:id', async (req, res) => {
 
     res.send(user.ownAds).status(200);
 
-    res.end();
 })
-
-
 
 module.exports = route;

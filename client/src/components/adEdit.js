@@ -88,7 +88,12 @@ export function Edit() {
 
         userData.setData(newState);
 
-        navigate(`/details/${params.id}`);
+        setTimeout(() => {
+
+            navigate(`/details/${params.id}`);
+        }, 1000)
+
+        
 
     };
 
