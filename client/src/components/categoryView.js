@@ -8,7 +8,7 @@ export function CategoryView() {
 
             <div className='category-box'>
                 <Link to="/electronic">
-                    <img src='image/electronics.png' />
+                    <img src='/image/electronics.png' />
                    
                 </Link>
                  <p>Елетроника</p>
@@ -16,28 +16,28 @@ export function CategoryView() {
 
             <div className='category-box'>
                 <Link to="/tools">
-                    <img src='image/tools.png' />
+                    <img src='/image/tools.png' />
                 </Link>
                 <p>Инструменти</p>
             </div>
 
             <div className='category-box'>
                 <Link to="/animals">
-                    <img src='image/dog.png' />
+                    <img src='/image/dog.png' />
                 </Link>
                 <p>Животни</p>
             </div>
 
             <div className='category-box'>
                 <Link to="/service">
-                    <img src='image/service.png' />
+                    <img src='/image/service.png' />
                 </Link>
                 <p>Услуги</p>
             </div>
 
             <div className='category-box'>
                 <Link to="/cars">
-                    <img src='image/cars.png' />
+                    <img src='/image/cars.png' />
                 </Link>
                 <p>Коли</p>
             </div>

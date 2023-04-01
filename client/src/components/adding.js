@@ -1,14 +1,16 @@
 import { useState, useContext } from "react";
-import { AddingPicture } from "./addingPicture";
 import { useNavigate } from 'react-router-dom'
 import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inputValidation';
-import { userAuth } from "../context/auth";
+import { userData } from "../context/auth";
+import { adsData } from "../context/adsData";
 
 export default function Adding() {
 
     const navigate = useNavigate();
 
-    const userData = useContext(userAuth);
+    const user_data = useContext(userData);
+
+    const ads_Data = useContext(adsData);
 
     const [error, setError] = useState();
 
@@ -16,7 +18,7 @@ export default function Adding() {
 
     const [uploadFile, setFile] = useState("");
 
-    const sendData =  async (e) => {
+    const sendData = async (e) => {
 
         e.preventDefault();
 
@@ -32,7 +34,7 @@ export default function Adding() {
 
             data.append("file", uploadFile[0]);
 
-    
+
             if (data.get('file') !== 'undefined') {
 
                 fetch('http://localhost:1000/adding/image', {
@@ -49,23 +51,23 @@ export default function Adding() {
                 body: JSON.stringify(input),
             });
 
-            fetch('http://localhost:1000/my/ads', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(input),
-            });
         }
 
-        await adId.then(a => a.json()).then(a => input._id = a._id)
+        await adId.then(a => a.json()).then(a => input._id = a._id);
 
 
-        userData.setData(data => [...data, input])
-            
-             navigate('/');
-    
-       
+        fetch('http://localhost:1000/my/ads', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(input),
+        });
+
+        ads_Data.setAllAds(data => [...data, input])
+
+        navigate('/');
+
     }
 
     const getInputValue = (e) => {
@@ -73,7 +75,7 @@ export default function Adding() {
         const name = e.target.name;
         const value = e.target.value;
 
-        setInput(values => ({ ...values, ['owner']: userData.user._id }));
+        setInput(values => ({ ...values, ['owner']: user_data.user._id }));
 
         if (value.startsWith("C")) {
 
@@ -201,7 +203,7 @@ export default function Adding() {
                         id='email'
                         name='email'
                         onChange={getInputValue}
-                        value={userData.user.email}
+                        value={user_data.user.email}
                         readOnly
 
                     />

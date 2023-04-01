@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from "react";
-import { AddingPicture } from "./addingPicture";
-import { useNavigate, useParams, Navigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inputValidation';
-import { userAuth } from "../context/auth";
+import { userData } from "../context/auth";
+import { adsData } from "../context/adsData";
 
 
 export function Edit() {
@@ -11,7 +11,9 @@ export function Edit() {
 
     const params = useParams()
 
-    const userData = useContext(userAuth);
+    const user_data = useContext(userData);
+
+    const ads_data = useContext(adsData);
 
     const [error, setError] = useState();
 
@@ -21,7 +23,7 @@ export function Edit() {
 
     useEffect(() => {
 
-        userData.fetchData.filter(data => {
+        ads_data.allAds.filter(data => {
 
             if (data._id === params.id) {
                 setOldData(data);
@@ -61,13 +63,30 @@ export function Edit() {
                 body: JSON.stringify(oldData),
             });
 
+            fetch(`http://localhost:1000/edit/myAd/${user_data.user._id}`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(oldData),
+            });
+
+
             updateState();
         }
+
+        document.getElementsByClassName('showEditMessage')[0].style.display = 'block';
+
+        setTimeout(() => {
+
+            document.getElementsByClassName('showEditMessage')[0].style.display = 'none';
+
+        }, 2000);
     }
 
     const updateState = () => {
 
-        const newState = userData.fetchData.map(obj => {
+        const newState = ads_data.allAds.map(obj => {
 
             if (obj._id === params.id) {
 
@@ -86,14 +105,13 @@ export function Edit() {
             return obj;
         });
 
-        userData.setData(newState);
+        ads_data.setAllAds(newState);
 
         setTimeout(() => {
 
             navigate(`/details/${params.id}`);
-        }, 1000)
 
-        
+        }, 2000);
 
     };
 
@@ -232,7 +250,7 @@ export function Edit() {
                         id='email'
                         name='email'
                         onChange={getInputValue}
-                        value={userData.user.email}
+                        value={user_data.user.email}
                         readOnly
 
                     />
@@ -246,6 +264,10 @@ export function Edit() {
                         onChange={getInputValue}
                         value={oldData.phone || ''}
                     />
+                </div>
+
+                <div className="showEditMessage">
+                    <p>Обявата е редактирана</p>
                 </div>
                 <button id='adding'>Редакция</button>
             </form>

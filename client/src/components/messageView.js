@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext, useRef } from 'react';
-import { userAuth } from '../context/auth';
+import { userData } from '../context/auth';
 
 export function MessageView() {
 
-    const userData = useContext(userAuth);
+    const user_Data = useContext(userData);
 
     const [messages, setMessages] = useState([]);
 
@@ -13,7 +13,7 @@ export function MessageView() {
 
     useEffect(() => {
 
-        fetch(`http://localhost:1000/messages/${userData.user._id}`)
+        fetch(`http://localhost:1000/messages/${user_Data.user._id}`)
             .then(a => a.json())
             .then(a => setMessages(a))
 
@@ -32,7 +32,7 @@ export function MessageView() {
                 'content-type': 'Application/json'
             },
             body: JSON.stringify({
-                user: userData.user._id,
+                user: user_Data.user._id,
                 message: e.target.title
             })
 
@@ -57,25 +57,34 @@ export function MessageView() {
             body: JSON.stringify({
                 message: getMessage,
                 recipient: sender,
-                sender: userData.user._id,
+                sender: user_Data.user._id,
                 title,
                 answer: true
             })
 
         });
-    }
 
+        setMessages(msg => [...msg, {
+            message: getMessage,
+            recipient: sender,
+            sender: user_Data.user._id,
+            title,
+            answer: true
+        }]);
+    }
 
     return (
 
         <div className="messagesDiv">
 
-            {messages.length === 0 ? <span>Нямате съобщения</span> : messages.map((mess, index) => {
+            <h3 className='messageHeader'>Съобщения</h3>
+
+            {messages.length === 0 ? <span className='messageSpan'>Нямате съобщения</span> : messages.map((mess, index) => {
                 return (<div className="messages" key={index} >
                     <span>Обява:</span><p className='title'>{mess.title}</p>
                     <span>Съобщение:</span><p className='textMessage'>{mess.message}</p>
-                    {mess.sender !== userData.user._id ? <span>Получено</span> : <span>Изпратено</span>}
-                    {mess.sender !== userData.user._id ?
+                    {mess.sender !== user_Data.user._id ? <span>Получено</span> : <span>Изпратено</span>}
+                    {mess.sender !== user_Data.user._id ?
                         <>
                             < textarea className="answerMessageArea" placeholder="Отговор" title={mess.title} rows={4} cols={40} onBlur={getAnswer} />
                             <button className='answerBtn' onClick={answerToMessage} id={mess.sender}>Отговор</button>

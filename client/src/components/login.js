@@ -4,11 +4,11 @@ import { login } from '../services/authService';
 import { Navigate } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
 import { useContext } from 'react';
-import { userAuth } from '../context/auth';
+import { userData } from '../context/auth';
 
 export function Login() {
 
-    const userData = useContext(userAuth);
+    const user_data = useContext(userData);
 
     const [input, setInput] = useState({});
 
@@ -26,9 +26,9 @@ export function Login() {
 
                 if (a.response === undefined) {
 
-                    userData.setToken(a.token);
+                    user_data.setToken(a.token);
 
-                    userData.setUser(jwt_decode(a.token));
+                    user_data.setUser(jwt_decode(a.token));
 
                     setStatus(status => status = a.login);
 

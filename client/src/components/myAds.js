@@ -1,30 +1,31 @@
 import { useState, useEffect, useContext } from "react"
-import { userAuth } from "../context/auth";
+import { userData } from "../context/auth";
 import { Link } from "react-router-dom";
 
 export function MyAds() {
 
-    const [ data, setData ] = useState([]);
+    const [myAds, setMyAds] = useState([]);
 
-    const user = useContext(userAuth);
+    const user_data = useContext(userData);
 
     useEffect(() => {
 
-        fetch(`http://localhost:1000/myAds/${user.user._id}`)
-        .then(a => a.json())
-        .then(a => setData(a));
-    }, [])
+        fetch(`http://localhost:1000/myAds/${user_data.user._id}`)
+            .then(a => a.json())
+            .then(a => setMyAds(a));
+
+    }, []);
 
     return (
 
         <div className="contentView-container">
 
-            {/*  {data.fetchData[0] === 'undefined' ? */}  {/* : ''} */}
+            <h3>Моите обяви</h3>
 
-            {data?.length  > 1 ? data.map((data, i) => {
+            {myAds.map((data, i) => {
 
                 return (
-                    <Link key={i} to={`/details/${data.title}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                    <Link key={i} to={`/details/${data._id}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                         <div className='ad'>
                             <div className="container p-3 my-3 border">
                                 <img src={`http://localhost:1000/${data.image}`} alt=""></img>
@@ -32,32 +33,14 @@ export function MyAds() {
                                     <h1>{data.title}</h1>
                                     <p className='location'>{data.location}</p>
                                     <p className='price'>{data.price}лв</p>
-                                    <button>Добави в любими</button>
                                 </div>
                             </div>
                         </div>
                     </Link>
                 )
-            }) : ''}
+            })}
 
-            {data?.length  === 1 ? <Link to={`/details/${data.title}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
-                <div className='ad'>
-                    <div className="container p-3 my-3 border">
-                        <img src={`http://localhost:1000/${data.image}`} alt=""></img>
-                        <div className='textContainer'>
-                            <h1>{data.title}</h1>
-                            <p className='location'>{data.location}</p>
-                            <p className='price'>{data.price}лв</p>
-                            <button>Добави в любими</button>
-                        </div>
-                    </div>
-                </div>
-            </Link> : ''}
-
-
-            {data == "" ? <span >Нямате обяви...</span> : ''}
-
-           {/*  {data.fetchData ?.length === 0 ? <span >Няма обяви за показване...</span> : ''} */}
+            {myAds.length === 0 ? <span >Нямате обяви...</span> : ''}
 
         </div>
     )

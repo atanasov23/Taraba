@@ -88,3 +88,16 @@
    border: none;
    font-size: 23px;
  }
+
+ .showMessage{
+   position: relative;
+   height: 70px;
+   width: 400px;
+   background-color: #002f34;
+   left: 27%;
+   display: none;
+   font-size: 25px;
+   color: white;
+   text-align: center;
+ }
+ 

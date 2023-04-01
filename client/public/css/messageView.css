@@ -4,7 +4,7 @@
     height: auto;
     width: 700px;
     left: 30%;
-    top: 30%;
+    top: 40%;
 }
 
 .messages{
@@ -46,4 +46,19 @@
     height: 50px;
     width: 700px;
     border: none;
+}
+
+.messageSpan{
+    position: absolute;
+    font-size: 30px;
+    left: 35%;
+    top: 400%;
+}
+
+
+.messageHeader{
+
+    position: relative;
+    transform: translate(0%, 500%);
+
 }

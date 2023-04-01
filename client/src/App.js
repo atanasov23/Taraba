@@ -2,18 +2,19 @@ import Footer from "./components/footer";
 import Header from "./components/header";
 import { Login } from "./components/login";
 import { Register } from "./components/register";
-import { Route, Routes } from 'react-router-dom';
-import Auth from './components/auth';
+import { Route, Routes } from "react-router-dom";
+import Auth from "./components/auth";
 import Search from "./components/search";
 import Adding from "./components/adding";
 import { CategoryView } from "./components/categoryView";
-import { ContentView } from './components/contentView';
+import { ContentView } from "./components/contentView";
 import { AdDetails } from "./components/adDetails";
-import { useState, useEffect } from 'react';
-import { userAuth } from "./context/auth";
+import { useState, useEffect } from "react";
+import { userData } from "./context/auth";
+import { adsData } from "./context/adsData";
 import { Edit } from "./components/adEdit";
 import { MessageView } from "./components/messageView";
-import { Favorites } from './components/favorites';
+import { Favorites } from "./components/favorites";
 import { FavoritesDetails } from "./components/favoritesDetails";
 import { Logout } from "./components/logout";
 import { MyAds } from "./components/myAds";
@@ -24,69 +25,81 @@ function App() {
 
     const [user, setUser] = useState("");
 
-    const [fetchData, setFetchData] = useState([]);
-    
+    const [allAds, setAllAds] = useState([]);
+
+    const [myFavorites, setMyFavorites] = useState([]);
+
     useEffect(() => {
 
-        fetch('http://localhost:1000/all')
+        fetch("http://localhost:1000/all")
             .then(a => a.json())
             .then(a => {
-                setFetchData((fetchData) => fetchData = a);
+                setAllAds(a);
             });
 
     }, []);
 
-    const data = {
+    const user_data = {
         token,
         setToken,
         user,
         setUser,
-        fetchData,
-        setData: setFetchData,
+    }
+
+    const ads = {
+        allAds,
+        setAllAds,
+        myFavorites,
+        setMyFavorites
     }
 
     return (
         <>
-            <userAuth.Provider value={data}>
+            <userData.Provider value={user_data}>
 
                 <Header />
 
                 <main>
 
-                    <Routes>
+                    <adsData.Provider value={ads}>
 
-                        <Route path='/' element={<><Search /> <CategoryView /> <ContentView /> </>} />
+                        <Routes>
 
-                        <Route path='/details/:id' element={<><Search /><AdDetails /></>} />
+                            <Route path="/" element={<><Search /> <CategoryView /> <ContentView /> </>} />
 
-                        <Route path='/login' element={<Login />} />
+                            <Route path="/details/:id" element={<><Search /><AdDetails /></>} />
 
-                        <Route path='/register' element={<Register />} />
+                            <Route path="/login" element={<Login />} />
 
-                        <Route path='/logout' element={<Logout />} />
+                            <Route path="/register" element={<Register />} />
 
-                        <Route element={< Auth />}>
+                            <Route path="/logout" element={<Logout />} />
 
-                            <Route path='/user/messages' element={<MessageView />} />
+                            <Route element={< Auth />}>
 
-                            <Route path='/user/fav' element={<Favorites />} />
+                                <Route path="/user/messages" element={<><Search /> <CategoryView /> <MessageView /> </>} />
 
-                            <Route path='/favorite/details/:id' element={<FavoritesDetails />} />
+                                <Route path="/user/fav" element={<><Search /> <CategoryView /> <Favorites /> </>} />
 
-                            <Route path='/user/ads' element={<MyAds />} />
+                                <Route path="/favorite/details/:id" element={<FavoritesDetails />} />
 
-                            <Route path='ad/edit/:id' element={<Edit />} />
+                                <Route path="/user/ads" element={<><Search /> <CategoryView /> <MyAds /> </>} />
 
-                            <Route path='/adding' element={<Adding />} />
+                                <Route path="ad/edit/:id" element={<Edit />} />
 
-                        </Route>
+                                <Route path="/adding" element={<Adding />} />
 
-                    </Routes>
+                            </Route>
+
+                        </Routes>
+
+                    </adsData.Provider>
 
                 </main>
 
                 <Footer />
-            </userAuth.Provider>
+
+            </userData.Provider>
         </>
     )
 }

@@ -1,15 +1,18 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useContext } from "react";
-import { userAuth } from "../context/auth";
+import { userData } from "../context/auth";
+import { adsData } from "../context/adsData";
 
 export function FavoritesDetails() {
 
-    const userData = useContext(userAuth);
+    const user_data = useContext(userData);
+
+    const ads_data = useContext(adsData);
 
     const params = useParams();
 
-    const [data, setGetData] = useState([]);
+    const [ad, setAd] = useState([]);
 
     const textMessage = useRef();
 
@@ -17,10 +20,10 @@ export function FavoritesDetails() {
 
     useEffect(() => {
 
-        const ad = userData.fetchData.filter(data => {
+        ads_data.allAds.filter(data => {
 
             if (data._id === params.id) {
-                setGetData(data);
+                setAd(data);
             }
         })
 
@@ -35,32 +38,53 @@ export function FavoritesDetails() {
             },
             body: JSON.stringify({
                 message: textMessage.current.value,
-                recipient: data.owner,
-                sender: userData.user._id,
-                title: data.title
+                recipient: ad.owner,
+                sender: user_data.user._id,
+                title: ad.title
             })
-
         });
 
     }
 
     function removeFromFav() {
 
-        fetch(`http://localhost:1000/removeFav/${data._id}/${userData.user._id}`);
+        fetch(`http://localhost:1000/removeFav/${ad._id}/${user_data.user._id}`);
 
-        navigate('/user/fav');
+        document.getElementsByClassName('showMessage')[0].style.display = 'block';
+
+        setTimeout(() => {
+
+            document.getElementsByClassName('showMessage')[0].style.display = 'none';
+
+        }, 3000);
+
+        ads_data.setMyFavorites(ads => {
+
+            return ads.filter(myFav => {
+
+                return myFav._id !== params.id;
+            })
+
+        });
+
+        setTimeout(() => {
+
+            navigate('/user/fav');
+        }, 2000);
+
+
     }
 
-   
+
     return (
 
         <>
-            
-            {data.length === 0 ? 'Нямате любими' : ''}
-            {data !== undefined && data.owner !== userData.user._id ?
+
+            {ad.length === 0 ? 'Нямате любими' : ''}
+            {ad !== undefined && ad.owner !== user_data.user._id ?
 
                 <>
-                    {userData.user._id !== undefined ?
+                    {user_data.user._id !== undefined ?
                         <>
                             <div className="messageContainer">
                                 <textarea className="messageArea" placeholder="Изпрати съобщение" name="postContent" rows={4} cols={40} ref={textMessage} />
@@ -72,18 +96,22 @@ export function FavoritesDetails() {
                 : ""}
 
             <div className="adDetails">
-                
-                <img className="mainPic" src={data.image == 'undefined' ? '' : `http://localhost:1000/${data.image}`} alt="" />
+
+                <img className="mainPic" src={ad.image == 'undefined' ? '' : `http://localhost:1000/${ad.image}`} alt="" />
 
                 <div className="imageGalery">
 
                 </div>
-                <div className="adData">
-                    <h1>{data !== undefined ? data.title : ''}</h1>
-                    <p className="price-2">{data !== undefined ? data.price : ''}лв</p>
-                    <p className="description">{data !== undefined ? data.description : ''}</p>
+                <div className="showMessage">
+                    <p>Премахнато от любими</p>
                 </div>
 
+                <div className="adData">
+                    <h1>{ad !== undefined ? ad.title : ''}</h1>
+                    <p className="price-2">{ad !== undefined ? ad.price : ''}лв</p>
+                    <p className="description">{ad !== undefined ? ad.description : ''}</p>
+                </div>
+                
                 <div className="buttons">
 
                     <button onClick={removeFromFav}>Премахване от любими</button>

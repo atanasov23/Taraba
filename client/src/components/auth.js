@@ -2,21 +2,21 @@ import React from 'react';
 import { Outlet, Navigate, useLocation } from "react-router-dom";
 import { isJwtExpired } from 'jwt-check-expiration';
 import { useContext } from 'react';
-import { userAuth } from '../context/auth';
+import { userData } from '../context/auth';
 
 export default function Auth() {
 
-    const userData = useContext(userAuth);
+    const user_data = useContext(userData);
 
     const location = useLocation();
 
     function jwt() {
 
-        if (userData.token !== '') {
+        if (user_data.token !== '') {
 
-            if (isJwtExpired(userData.token)) {
+            if (isJwtExpired(user_data.token)) {
 
-                userData.setToken("");
+                user_data.setToken("");
 
             }
 

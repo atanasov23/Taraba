@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import { userAuth } from "../context/auth";
+import { userData } from "../context/auth";
 import { useContext } from "react";
-import { Logout } from "./logout";
 
 export function Navigation() {
 
-    const userData = useContext(userAuth);
+    const user_data = useContext(userData);
 
     return (
 
@@ -14,13 +13,14 @@ export function Navigation() {
             <div className="dropdown">
                 <button className="dropbtn">Профил</button>
                 <div className="dropdown-content">
-                    {!userData.token ?
+                    {!user_data.token ?
                         <>
                             <Link to="/login">Влизане</Link>
                             <Link to="/register">Регистрация</Link>
                         </>
                         :
                         <>
+                            <span>{user_data.user.username}</span>
                             <Link to="/user/messages">Съобщения</Link>
                             <Link to="/user/fav">Любими</Link>
                             <Link to="/user/ads">Моите обяви</Link>

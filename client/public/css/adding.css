@@ -107,3 +107,21 @@ select{
     text-align: center;
     color: red;
 }
+
+.showEditMessage{
+    position: relative;
+    height: 70px;
+    width: 400px;
+    background-color: #002f34;
+    left: 27%;
+    transform: translate(0%, -50%);
+    display: none;
+    
+  }
+  .showEditMessage p{
+ 
+    position: relative;
+    color: white;
+    font-size: 25px;
+    text-align: center;
+  }
