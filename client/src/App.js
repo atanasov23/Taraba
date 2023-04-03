@@ -18,6 +18,7 @@ import { Favorites } from "./components/favorites";
 import { FavoritesDetails } from "./components/favoritesDetails";
 import { Logout } from "./components/logout";
 import { MyAds } from "./components/myAds";
+import { DisplayAds } from "./components/displayAds";
 
 function App() {
 
@@ -59,15 +60,19 @@ function App() {
 
                 <Header />
 
+                <Search />
+
+                <CategoryView />
+
                 <main>
 
                     <adsData.Provider value={ads}>
 
                         <Routes>
 
-                            <Route path="/" element={<><Search /> <CategoryView /> <ContentView /> </>} />
+                            <Route path="/" element={<ContentView />} />
 
-                            <Route path="/details/:id" element={<><Search /><AdDetails /></>} />
+                            <Route path="/details/:id" element={<AdDetails />} />
 
                             <Route path="/login" element={<Login />} />
 
@@ -75,15 +80,25 @@ function App() {
 
                             <Route path="/logout" element={<Logout />} />
 
+                            <Route path="/:electronic" element={<DisplayAds />} />
+
+                            <Route path="/:tools" element={<DisplayAds />} />
+
+                            <Route path="/:animals" element={<DisplayAds />} />
+
+                            <Route path="/:service" element={<DisplayAds />} />
+
+                            <Route path="/:cars" element={<DisplayAds />} />
+
                             <Route element={< Auth />}>
 
-                                <Route path="/user/messages" element={<><Search /> <CategoryView /> <MessageView /> </>} />
+                                <Route path="/user/messages" element={<MessageView />} />
 
-                                <Route path="/user/fav" element={<><Search /> <CategoryView /> <Favorites /> </>} />
+                                <Route path="/user/fav" element={<Favorites />} />
 
                                 <Route path="/favorite/details/:id" element={<FavoritesDetails />} />
 
-                                <Route path="/user/ads" element={<><Search /> <CategoryView /> <MyAds /> </>} />
+                                <Route path="/user/ads" element={<MyAds />} />
 
                                 <Route path="ad/edit/:id" element={<Edit />} />
 

@@ -1,8 +1,9 @@
 .adDetails{
-    position: relative;
+    position: absolute;
     width: 850px;
     height: auto;
     left: 28%;
+    top: 50%;
     background-color: white;
 }
 
