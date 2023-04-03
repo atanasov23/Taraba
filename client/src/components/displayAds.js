@@ -17,9 +17,10 @@ export function DisplayAds() {
             });
     });
 
-
     return (
         <div className="contentView-container">
+
+            <h3>{ads.title}</h3>
 
             {ads.map((data, i) => {
 

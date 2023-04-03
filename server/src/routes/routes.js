@@ -237,13 +237,6 @@ route.get('/myAds/:id', async (req, res) => {
 
 });
 
-
-
-route.get('/ads/:category', async (req, res) => {
-
-    const ads = await Announced.find({category: req.params.category})
-
-    res.status(200).send(ads);
-});
+route.get('/ads/:category', async (req, res) => res.status(200).send(await Announced.find({ category: req.params.category })));
 
 module.exports = route;
