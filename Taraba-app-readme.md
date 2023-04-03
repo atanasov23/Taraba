@@ -1,4 +1,4 @@
-# Description on Taraba App #
+# Description on Taraba app #
 
 This is an application for posting an ad.
 
