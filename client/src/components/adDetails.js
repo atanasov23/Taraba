@@ -59,6 +59,15 @@ export function AdDetails() {
 
         });
 
+        ads_Data.setMyAds(ads => {
+
+            return ads.filter(ads => {
+
+                return ads._id !== params.id;
+            })
+
+        });
+
         fetch(`http://localhost:1000/adDelete/${params.id}`);
 
         fetch(`http://localhost:1000/delete/myAd/${params.id}/${user_data.user._id}`);
@@ -94,6 +103,8 @@ export function AdDetails() {
         }, 3000);
 
         fetch(`http://localhost:1000/addFav/${params.id}/${user_data.user._id}`);
+
+        ads_Data.setMyFavorites(fav => [...fav, ad]);
 
     }
 

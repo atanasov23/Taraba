@@ -5,6 +5,8 @@ const User = require('../models/user');
 
 route.get('/all', async (req, res) => res.send(await Announced.find()));
 
+/* res.send(await Announced.find().sort({ _id: 1 }).limit(5).lean()) */
+
 route.get('/undefined', (req, res) => res.status(200).send({}));
 
 route.get('/ad/edit/:id', async (req, res) => res.send(await Announced.findOne({ title: req.params.id })));
@@ -237,6 +239,17 @@ route.get('/myAds/:id', async (req, res) => {
 
 });
 
-route.get('/ads/:category', async (req, res) => res.status(200).send(await Announced.find({ category: req.params.category })));
+route.get('/ads/:category', async (req, res) => {
+
+    if (req.params.category === 'all') {
+
+        res.status(200).send(await Announced.find());
+
+    } else {
+
+        res.status(200).send(await Announced.find({ category: req.params.category }));
+    }
+
+});
 
 module.exports = route;

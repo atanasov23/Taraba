@@ -18,7 +18,7 @@ import { Favorites } from "./components/favorites";
 import { FavoritesDetails } from "./components/favoritesDetails";
 import { Logout } from "./components/logout";
 import { MyAds } from "./components/myAds";
-import { DisplayAds } from "./components/displayAds";
+import { DisplayAds } from "./components/displayCategoryAds";
 
 function App() {
 
@@ -27,6 +27,8 @@ function App() {
     const [user, setUser] = useState("");
 
     const [allAds, setAllAds] = useState([]);
+
+    const [myAds, setMyAds] = useState([]);
 
     const [myFavorites, setMyFavorites] = useState([]);
 
@@ -40,6 +42,22 @@ function App() {
 
     }, []);
 
+    useEffect(() => {
+
+        if (user) {
+
+            fetch(`http://localhost:1000/fav/${user._id}`)
+                .then(a => a.json())
+                .then(a => setMyFavorites(a));
+
+            fetch(`http://localhost:1000/myAds/${user._id}`)
+                .then(a => a.json())
+                .then(a => setMyAds(a));
+
+        }
+
+    }, [user]);
+
     const user_data = {
         token,
         setToken,
@@ -51,7 +69,9 @@ function App() {
         allAds,
         setAllAds,
         myFavorites,
-        setMyFavorites
+        setMyFavorites,
+        myAds,
+        setMyAds
     }
 
     return (
@@ -89,6 +109,8 @@ function App() {
                             <Route path="/:service" element={<DisplayAds />} />
 
                             <Route path="/:cars" element={<DisplayAds />} />
+
+                            <Route path="/:all" element={<DisplayAds />} />
 
                             <Route element={< Auth />}>
 

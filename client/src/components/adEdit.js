@@ -107,6 +107,8 @@ export function Edit() {
 
         ads_data.setAllAds(newState);
 
+        ads_data.setMyAds(newState);
+
         setTimeout(() => {
 
             navigate(`/details/${params.id}`);

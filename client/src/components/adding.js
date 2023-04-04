@@ -64,7 +64,9 @@ export default function Adding() {
             body: JSON.stringify(input),
         });
 
-        ads_Data.setAllAds(data => [...data, input])
+        ads_Data.setAllAds(data => [...data, input]);
+
+        ads_Data.setMyAds(data => [...data, input]);
 
         navigate('/');
 
@@ -137,7 +139,7 @@ export default function Adding() {
                         <option value='electronics'>Електроника</option>
                         <option value='tools'>Инструменти</option>
                         <option value='animals'>Животни</option>
-                        <option value='services'>Услуги</option>
+                        <option value='service'>Услуги</option>
                         <option value='cars'>Коли</option>
                     </select>
                 </div>
@@ -152,8 +154,6 @@ export default function Adding() {
                         value={input.name}
                     />
                 </div>
-
-                {/*  <AddingPicture input={input} onChange={onChange} /> */}
 
                 <div className="image-upload">
 

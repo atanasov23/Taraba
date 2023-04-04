@@ -1,7 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-
 export function DisplayAds() {
 
     const params = useParams();
@@ -15,7 +14,8 @@ export function DisplayAds() {
             .then(a => {
                 setAds(a);
             });
-    });
+
+    }, [params.electronic]);
 
     return (
         <div className="contentView-container">
@@ -33,7 +33,6 @@ export function DisplayAds() {
                                     <h1>{data.title}</h1>
                                     <p className='location'>{data.location}</p>
                                     <p className='price'>{data.price}лв</p>
-                                    <button>Добави в любими</button>
                                 </div>
                             </div>
                         </div>

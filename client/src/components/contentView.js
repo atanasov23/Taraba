@@ -10,6 +10,8 @@ export function ContentView() {
 
         <div className="contentView-container">
 
+            <h3>Последните 5 добавени обяви</h3>
+
             {ads_data.allAds.map((data, i) => {
 
                 return (
@@ -21,7 +23,6 @@ export function ContentView() {
                                     <h1>{data.title}</h1>
                                     <p className='location'>{data.location}</p>
                                     <p className='price'>{data.price}лв</p>
-                                    <button>Добави в любими</button>
                                 </div>
                             </div>
                         </div>

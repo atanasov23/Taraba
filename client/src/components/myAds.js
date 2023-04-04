@@ -1,28 +1,31 @@
 import { useState, useEffect, useContext } from "react"
 import { userData } from "../context/auth";
 import { Link } from "react-router-dom";
+import { adsData } from "../context/adsData";
 
 export function MyAds() {
 
-    const [myAds, setMyAds] = useState([]);
+    /* const [myAds, setMyAds] = useState([]); */
 
-    const user_data = useContext(userData);
+    /* const user_data = useContext(userData); */
 
-    useEffect(() => {
+    const ads = useContext(adsData);
+
+   /*  useEffect(() => {
 
         fetch(`http://localhost:1000/myAds/${user_data.user._id}`)
             .then(a => a.json())
             .then(a => setMyAds(a));
 
     }, []);
-
+ */
     return (
 
         <div className="contentView-container">
 
             <h3>Моите обяви</h3>
 
-            {myAds.map((data, i) => {
+            {ads.myAds.map((data, i) => {
 
                 return (
                     <Link key={i} to={`/details/${data._id}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
@@ -40,7 +43,7 @@ export function MyAds() {
                 )
             })}
 
-            {myAds.length === 0 ? <span >Нямате обяви...</span> : ''}
+            {ads.myAds.length === 0 ? <span >Нямате обяви...</span> : ''}
 
         </div>
     )
