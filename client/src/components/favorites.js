@@ -1,21 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { adsData } from '../context/adsData';
-import { userData } from '../context/auth';
 
 export function Favorites() {
 
-/*     const user_data = useContext(userData); */
-
     const ads_data = useContext(adsData);
-
-/*     useEffect(() => {
-
-        fetch(`http://localhost:1000/fav/${user_data.user._id}`)
-            .then(a => a.json())
-            .then(a => ads_data.setMyFavorites(a));
-
-    }, []); */
 
     return (
 

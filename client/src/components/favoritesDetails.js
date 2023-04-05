@@ -1,8 +1,10 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useContext } from "react";
 import { userData } from "../context/auth";
 import { adsData } from "../context/adsData";
+import { showMessage } from "../utils/showMessage";
+import { saveMessage } from "../utils/sendMessage";
 
 export function FavoritesDetails() {
 
@@ -25,23 +27,21 @@ export function FavoritesDetails() {
             if (data._id === params.id) {
                 setAd(data);
             }
+
+            return data;
         })
 
-    }, []);
+    }, [ads_data.allAds, params.id]);
 
     function sendMessage() {
 
-        fetch(`http://localhost:1000/sendMessage/`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'Application/json'
-            },
-            body: JSON.stringify({
-                message: textMessage.current.value,
-                recipient: ad.owner,
-                sender: user_data.user._id,
-                title: ad.title
-            })
+        showMessage('Съобщението е изпратено');
+
+        saveMessage({
+            message: textMessage.current.value,
+            recipient: ad.owner,
+            sender: user_data.user._id,
+            title: ad.title
         });
 
     }
@@ -50,13 +50,7 @@ export function FavoritesDetails() {
 
         fetch(`http://localhost:1000/removeFav/${ad._id}/${user_data.user._id}`);
 
-        document.getElementsByClassName('showMessage')[0].style.display = 'block';
-
-        setTimeout(() => {
-
-            document.getElementsByClassName('showMessage')[0].style.display = 'none';
-
-        }, 3000);
+        showMessage('Премахнато от любими');
 
         ads_data.setMyFavorites(ads => {
 
@@ -70,11 +64,9 @@ export function FavoritesDetails() {
         setTimeout(() => {
 
             navigate('/user/fav');
+
         }, 2000);
-
-
     }
-
 
     return (
 
@@ -97,13 +89,13 @@ export function FavoritesDetails() {
 
             <div className="adDetails">
 
-                <img className="mainPic" src={ad.image == 'undefined' ? '' : `http://localhost:1000/${ad.image}`} alt="" />
+                <img className="mainPic" src={`http://localhost:1000/${ad.image}`} alt="" />
 
                 <div className="imageGalery">
 
                 </div>
                 <div className="showMessage">
-                    <p>Премахнато от любими</p>
+                    <p></p>
                 </div>
 
                 <div className="adData">
@@ -111,7 +103,7 @@ export function FavoritesDetails() {
                     <p className="price-2">{ad !== undefined ? ad.price : ''}лв</p>
                     <p className="description">{ad !== undefined ? ad.description : ''}</p>
                 </div>
-                
+
                 <div className="buttons">
 
                     <button onClick={removeFromFav}>Премахване от любими</button>

@@ -66,6 +66,7 @@
  .messageContainer{
    position: absolute;
    left: 75%;
+   top: 50%;
    height: 400px;
    width: 350px;
 

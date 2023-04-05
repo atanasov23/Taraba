@@ -54,7 +54,7 @@ export function Login() {
     return (
         <form onSubmit={submit} noValidate>
             {status ? <Navigate to='/'></Navigate> : ''}
-            <section className="vh-100" style={{ padding: "150px" }}>
+            <section className="vh-100" style={{ padding: "300px" }}>
                 <div className="container py-5 h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
                         <div className="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -90,16 +90,7 @@ export function Login() {
                                     </div>
 
                                     <div className="form-check d-flex justify-content-start mb-4">
-                                        {/*     <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        defaultValue=""
-                                        id="form1Example3"
-                                    /> */}
-                                        {/*        <label className="form-check-label" htmlFor="form1Example3">
-                                        {" "}
-                                        Remember password{" "}
-                                    </label> */}
+
                                         <label className="form-check-label" htmlFor="form1Example3">
                                             {" "}
                                             <Link to='/register'>You don't have an account{" "}</Link>
@@ -108,22 +99,7 @@ export function Login() {
                                     <button className="btn btn-primary btn-lg btn-block" type="submit" onClick={sendData}>
                                         Login
                                     </button>
-                                    {/* <hr className="my-4" />
-                                <button
-                                    className="btn btn-lg btn-block btn-primary"
-                                    style={{ backgroundColor: "#dd4b39" }}
-                                    type="submit"
-                                >
-                                    <i className="fab fa-google me-2" /> Sign in with google
-                                </button>
-                                <button
-                                    className="btn btn-lg btn-block btn-primary mb-2"
-                                    style={{ backgroundColor: "#3b5998" }}
-                                    type="submit"
-                                >
-                                    <i className="fab fa-facebook-f me-2" />
-                                    Sign in with facebook
-                                </button> */}
+
                                 </div>
                             </div>
                         </div>

@@ -28,9 +28,11 @@ export function Edit() {
             if (data._id === params.id) {
                 setOldData(data);
             }
+
+            return data;
         })
 
-    }, []);
+    }, [ads_data.allAds, params.id]);
 
 
     const sendData = (e) => {
@@ -109,6 +111,8 @@ export function Edit() {
 
         ads_data.setMyAds(newState);
 
+        ads_data.setLastAds(newState);
+
         setTimeout(() => {
 
             navigate(`/details/${params.id}`);
@@ -167,7 +171,7 @@ export function Edit() {
     return (
 
         <div className="addingContainer">
-            <span>Добави обява</span>
+            <span>Редактиране</span>
             <div id='error'>{error}</div>
             <form onSubmit={sendData} method="POST">
                 <div className="form-group">

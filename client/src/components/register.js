@@ -110,34 +110,13 @@ export function Register() {
           />
         </div>
 
-        {/*    <div className="form-group">
-            <input
-              type="text"
-              className="form-control item"
-              id="birth-date"
-              placeholder="Birth Date"
-            />
-          </div> */}
         <div className="form-group">
           <button className="btn btn-block create-account" onClick={sendData} >
             Create Account
           </button>
         </div>
       </form>
-      {/*  <div className="social-media">
-          <h5>Sign up with social media</h5>
-          <div className="social-icons">
-            <a href="#">
-              <i className="icon-social-facebook" title="Facebook" />
-            </a>
-            <a href="#">
-              <i className="icon-social-google" title="Google" />
-            </a>
-            <a href="#">
-              <i className="icon-social-twitter" title="Twitter" />
-            </a>
-          </div>
-        </div> */}
+
     </div>
 
   )

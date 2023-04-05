@@ -3,6 +3,8 @@ import { useEffect, useState, useRef } from "react";
 import { useContext } from "react";
 import { userData } from "../context/auth";
 import { adsData } from "../context/adsData";
+import { showMessage } from "../utils/showMessage";
+import { saveMessage } from "../utils/sendMessage";
 
 export function AdDetails() {
 
@@ -25,27 +27,23 @@ export function AdDetails() {
             if (data._id === params.id) {
 
                 setAd(data);
-            }
+            };
+
+            return data;
         })
 
-    }, []);
+    }, [ads_Data.allAds, params.id]);
 
     function sendMessage() {
 
-        fetch(`http://localhost:1000/sendMessage/`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'Application/json'
-            },
-            body: JSON.stringify({
-                message: textMessage.current.value,
-                recipient: ad.owner,
-                sender: user_data.user._id,
-                title: ad.title
-            })
+        showMessage('Съобщението е изпратено');
 
+        saveMessage({
+            message: textMessage.current.value,
+            recipient: ad.owner,
+            sender: user_data.user._id,
+            title: ad.title
         });
-
     }
 
     function adDelete() {
@@ -68,39 +66,24 @@ export function AdDetails() {
 
         });
 
-        fetch(`http://localhost:1000/adDelete/${params.id}`);
-
-        fetch(`http://localhost:1000/delete/myAd/${params.id}/${user_data.user._id}`);
-
-        const messageDiv = document.getElementsByClassName('showMessage')[0];
-
-        messageDiv.style.display = 'block';
-
-        messageDiv.textContent = 'Обявата е изтрита';
+        showMessage('Обявата е изтрита');
 
         setTimeout(() => {
-
-            messageDiv.style.display = 'none';
 
             navigate('/');
 
         }, 2000);
-        
+
+
+        fetch(`http://localhost:1000/adDelete/${params.id}`);
+
+        fetch(`http://localhost:1000/delete/myAd/${params.id}/${user_data.user._id}`);
+
     }
 
     function addToFav() {
 
-        const messageDiv = document.getElementsByClassName('showMessage')[0];
-
-        messageDiv.style.display = 'block';
-
-        messageDiv.textContent = 'Добавено в любими';
-
-        setTimeout(() => {
-
-            messageDiv.style.display = 'none';
-
-        }, 3000);
+        showMessage('Добавено в любими');
 
         fetch(`http://localhost:1000/addFav/${params.id}/${user_data.user._id}`);
 
@@ -111,7 +94,6 @@ export function AdDetails() {
     return (
 
         <>
-
             {ad.owner !== user_data.user._id ?
 
                 <>
@@ -128,7 +110,7 @@ export function AdDetails() {
 
             <div className="adDetails">
 
-                <img className="mainPic" src={ad.image == 'undefined' ? '' : `http://localhost:1000/${ad.image}`} alt="" />
+                <img className="mainPic" src={`http://localhost:1000/${ad.image}`} alt="" />
 
                 <div className="imageGalery">
 
@@ -139,14 +121,14 @@ export function AdDetails() {
                 </div>
 
                 <div className="adData">
-                    <h1>{ad !== undefined ? ad.title : ''}</h1>
-                    <p className="price-2">{ad !== undefined ? ad.price : ''}лв</p>
-                    <p className="description">{ad !== undefined ? ad.description : ''}</p>
+                    <h1>{ad.title}</h1>
+                    <p className="price-2">{ad.price}лв</p>
+                    <p className="description">{ad.description}</p>
                 </div>
 
                 <div className="buttons">
 
-                    {ad !== undefined && ad.owner !== user_data.user._id ?
+                    {ad.owner !== user_data.user._id ?
 
                         <>
                             {user_data.user._id !== undefined && ad.owner !== user_data.user._id ?
@@ -156,7 +138,7 @@ export function AdDetails() {
                                 : ''}
                         </>
                         : <>
-                            <Link to={`/ad/edit/${ad !== undefined ? ad._id : ''}`}><button>Редакция</button></Link>
+                            <Link to={`/ad/edit/${ad._id}`}><button>Редакция</button></Link>
                             <button onClick={adDelete}>Изтриване</button>
 
                         </>}

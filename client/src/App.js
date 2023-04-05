@@ -4,12 +4,11 @@ import { Login } from "./components/login";
 import { Register } from "./components/register";
 import { Route, Routes } from "react-router-dom";
 import Auth from "./components/auth";
-import Search from "./components/search";
 import Adding from "./components/adding";
 import { CategoryView } from "./components/categoryView";
 import { ContentView } from "./components/contentView";
 import { AdDetails } from "./components/adDetails";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { userData } from "./context/auth";
 import { adsData } from "./context/adsData";
 import { Edit } from "./components/adEdit";
@@ -19,6 +18,9 @@ import { FavoritesDetails } from "./components/favoritesDetails";
 import { Logout } from "./components/logout";
 import { MyAds } from "./components/myAds";
 import { DisplayAds } from "./components/displayCategoryAds";
+import { useFetchAll } from "./hooks/fetchAll";
+import { useLastAds } from "./hooks/fetchLastAds";
+import { useFetchMyads } from "./hooks/fetchMyads";
 
 function App() {
 
@@ -28,35 +30,17 @@ function App() {
 
     const [allAds, setAllAds] = useState([]);
 
+    const [lastAds, setLastAds] = useState([]);
+
     const [myAds, setMyAds] = useState([]);
 
     const [myFavorites, setMyFavorites] = useState([]);
 
-    useEffect(() => {
+    useFetchAll(setAllAds);
 
-        fetch("http://localhost:1000/all")
-            .then(a => a.json())
-            .then(a => {
-                setAllAds(a);
-            });
+    useLastAds(setLastAds, allAds);
 
-    }, []);
-
-    useEffect(() => {
-
-        if (user) {
-
-            fetch(`http://localhost:1000/fav/${user._id}`)
-                .then(a => a.json())
-                .then(a => setMyFavorites(a));
-
-            fetch(`http://localhost:1000/myAds/${user._id}`)
-                .then(a => a.json())
-                .then(a => setMyAds(a));
-
-        }
-
-    }, [user]);
+    useFetchMyads(setMyFavorites, setMyAds, user, myAds);
 
     const user_data = {
         token,
@@ -71,7 +55,9 @@ function App() {
         myFavorites,
         setMyFavorites,
         myAds,
-        setMyAds
+        setMyAds,
+        lastAds,
+        setLastAds
     }
 
     return (
@@ -79,8 +65,6 @@ function App() {
             <userData.Provider value={user_data}>
 
                 <Header />
-
-                <Search />
 
                 <CategoryView />
 

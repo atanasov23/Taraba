@@ -1,5 +1,6 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { AdContainer } from "./adContainer";
 
 export function DisplayAds() {
 
@@ -20,23 +21,10 @@ export function DisplayAds() {
     return (
         <div className="contentView-container">
 
-            <h3>{ads.title}</h3>
-
             {ads.map((data, i) => {
 
                 return (
-                    <Link key={i} to={`/details/${data._id}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
-                        <div className='ad'>
-                            <div className="container p-3 my-3 border">
-                                <img src={`http://localhost:1000/${data.image}`} alt=""></img>
-                                <div className='textContainer'>
-                                    <h1>{data.title}</h1>
-                                    <p className='location'>{data.location}</p>
-                                    <p className='price'>{data.price}лв</p>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
+                    <AdContainer key={i} data={data} i={i} />
                 )
             })}
 

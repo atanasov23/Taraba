@@ -5,6 +5,8 @@ const User = require('../models/user');
 
 route.get('/all', async (req, res) => res.send(await Announced.find()));
 
+route.get('/lastAds', async (req, res) => res.send(await Announced.find().sort({ _id: -1 }).limit(5).lean()));
+
 /* res.send(await Announced.find().sort({ _id: 1 }).limit(5).lean()) */
 
 route.get('/undefined', (req, res) => res.status(200).send({}));
@@ -114,6 +116,8 @@ route.post('/sendMessage', async (req, res) => {
     myMessage.save();
 
     user.save();
+
+    res.status(200).send({})
 
 });
 

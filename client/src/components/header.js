@@ -1,7 +1,5 @@
 import { Navigation } from "./nav";
 import { Link } from 'react-router-dom';
-import { userData } from "../context/auth";
-import { useContext } from 'react'
 
 export default function Header() {
 
@@ -13,6 +11,7 @@ export default function Header() {
             <Link to='/adding' className="addBtn">
 
                 <p>Добави обява</p>
+                
             </Link>
 
             <Navigation />
