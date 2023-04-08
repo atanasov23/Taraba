@@ -4,7 +4,7 @@ import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inpu
 import { userData } from "../context/auth";
 import { adsData } from "../context/adsData";
 import { showMessage } from "../utils/showMessage";
-
+import { editData, editMyAds, editPic } from "../services/dataService";
 
 export function Edit() {
 
@@ -52,28 +52,12 @@ export function Edit() {
 
             if (data.get('file') !== "undefined") {
 
-                fetch('http://localhost:1000/edit/pic', {
-                    method: "POST",
-                    body: data,
-                });
+                editPic(data);
             }
 
-            fetch('http://localhost:1000/edit/data', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(oldData),
-            });
+            editData(oldData);
 
-            fetch(`http://localhost:1000/edit/myAd/${user_data.user._id}`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(oldData),
-            });
-
+            editMyAds(oldData, user_data.user._id);
 
             updateState();
         }
@@ -220,10 +204,10 @@ export function Edit() {
                 <div className="form-group">
                     <label htmlFor="">Категория *</label>
                     <select onChange={getInputValue} name="category" value={oldData.category}>
-                        <option value='electronics'>Електроника</option>
+                        <option value='electronic'>Електроника</option>
                         <option value='tools'>Инструменти</option>
                         <option value='animals'>Животни</option>
-                        <option value='services'>Услуги</option>
+                        <option value='service'>Услуги</option>
                         <option value='cars'>Коли</option>
                     </select>
                 </div>

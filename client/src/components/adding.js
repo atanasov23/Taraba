@@ -4,6 +4,7 @@ import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inpu
 import { userData } from "../context/auth";
 import { adsData } from "../context/adsData";
 import { showMessage } from "../utils/showMessage";
+import { addToMyAds, addingData, addingImage } from "../services/dataService";
 
 export default function Adding() {
 
@@ -38,32 +39,16 @@ export default function Adding() {
 
             if (data.get('file') !== 'undefined') {
 
-                fetch('http://localhost:1000/adding/image', {
-                    method: "POST",
-                    body: data,
-                });
+                addingImage(data);
             }
 
-            adId = fetch('http://localhost:1000/adding/data', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(input),
-            });
+            adId = addingData(input);
 
         }
 
         await adId.then(a => a.json()).then(a => input._id = a._id);
 
-
-        fetch('http://localhost:1000/my/ads', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(input),
-        });
+        addToMyAds(input);
 
         ads_Data.setAllAds(data => [...data, input]);
 
@@ -145,7 +130,7 @@ export default function Adding() {
                 <div className="form-group">
                     <label htmlFor="">Категория *</label>
                     <select onChange={getInputValue} name="category" value={input.name}>
-                        <option value='electronics'>Електроника</option>
+                        <option value='electronic'>Електроника</option>
                         <option value='tools'>Инструменти</option>
                         <option value='animals'>Животни</option>
                         <option value='service'>Услуги</option>
