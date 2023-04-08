@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AdContainer } from "./adContainer";
+import { adsData } from "../context/adsData";
 
 export function DisplayAds() {
 
@@ -8,18 +9,35 @@ export function DisplayAds() {
 
     const [ads, setAds] = useState([]);
 
+    const ads_data = useContext(adsData);
+
     useEffect(() => {
 
-        fetch(`http://localhost:1000/ads/${params.electronic}`)
-            .then(a => a.json())
-            .then(a => {
-                setAds(a);
+        if (params.electronic === 'all') {
+
+            setAds(ads_data.allAds);
+
+        } else {
+
+            const filter = ads_data.allAds.filter(ads => {
+
+                if (ads.category === params.electronic) {
+
+                    return ads;
+                }
+
+                
             });
 
-    }, [params.electronic]);
+            setAds(filter);
+        }
+
+    }, [params.electronic, ads_data.allAds]);
 
     return (
         <div className="contentView-container">
+
+            <h3>{ads.length} обяви</h3>
 
             {ads.map((data, i) => {
 

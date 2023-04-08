@@ -133,6 +133,7 @@ export function AdDetails() {
                     <h1>{ad.title}</h1>
                     <p className="price-2">{ad.price}лв</p>
                     <p className="description">{ad.description}</p>
+                    <p className='phone'>{ad.phone}</p>
                 </div>
 
                 <div className="buttons">

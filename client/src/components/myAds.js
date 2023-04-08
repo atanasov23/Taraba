@@ -10,7 +10,7 @@ export function MyAds() {
 
         <div className="contentView-container">
 
-            <h3>Моите обяви</h3>
+            <h3>Моите обяви {ads.myAds.length}</h3>
 
             {ads.myAds.map((data, i) => {
 

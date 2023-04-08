@@ -102,4 +102,12 @@
    color: white;
    text-align: center;
  }
+
+ .phone{
+   position: relative;
+   font-size: 22px;
+   left: 5%;
+   width: 800px;
+   
+ }
  

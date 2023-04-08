@@ -68,7 +68,8 @@ function App() {
 
         }
 
-    }, [user, allAds, myAds]);
+    }, [user]);
+    
 
     const user_data = {
         token,

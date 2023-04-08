@@ -83,7 +83,7 @@ export function Edit() {
 
     const updateState = () => {
 
-        const newState = ads_data.allAds.map(obj => {
+        const all = ads_data.allAds.map(obj => {
 
             if (obj._id === params.id) {
 
@@ -102,11 +102,49 @@ export function Edit() {
             return obj;
         });
 
-        ads_data.setAllAds(newState);
+        const myAds = ads_data.myAds.map(obj => {
 
-        ads_data.setMyAds(newState);
+            if (obj._id === params.id) {
 
-        ads_data.setLastAds(newState);
+                return {
+                    ...obj,
+                    title: oldData.title,
+                    category: oldData.category,
+                    description: oldData.description,
+                    location: oldData.location,
+                    phone: oldData.phone,
+                    price: oldData.price,
+                    image: oldData.image
+                };
+            }
+
+            return obj;
+        });
+
+        const lastAds = ads_data.lastAds.map(obj => {
+
+            if (obj._id === params.id) {
+
+                return {
+                    ...obj,
+                    title: oldData.title,
+                    category: oldData.category,
+                    description: oldData.description,
+                    location: oldData.location,
+                    phone: oldData.phone,
+                    price: oldData.price,
+                    image: oldData.image
+                };
+            }
+
+            return obj;
+        });
+
+        ads_data.setAllAds(all);
+
+        ads_data.setMyAds(myAds);
+
+        ads_data.setLastAds(lastAds);
 
         setTimeout(() => {
 

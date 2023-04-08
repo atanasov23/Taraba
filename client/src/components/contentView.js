@@ -6,13 +6,15 @@ export function ContentView() {
 
     const ads_data = useContext(adsData);
 
+    const lastFiveAds = ads_data.allAds.slice(Math.max(ads_data.allAds.length - 5, 0));
+
     return (
 
         <div className="contentView-container">
 
             <h3>Последнo добавени обяви</h3>
 
-            {ads_data.lastAds.map((data, i) => {
+            {lastFiveAds.map((data, i) => {
 
                 return (
                     <AdContainer key={i} data={data} i={i}/>
