@@ -10,6 +10,6 @@ export const showMessage = (value) => {
 
         messageDiv.style.display = 'none';
 
-    }, 2000);
+    }, 4000);
 
 }

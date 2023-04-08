@@ -66,6 +66,15 @@ export function AdDetails() {
 
         });
 
+        ads_Data.setLastAds(ads => {
+
+            return ads.filter(ads => {
+
+                return ads._id !== params.id;
+            })
+
+        });
+
         showMessage('Обявата е изтрита');
 
         setTimeout(() => {

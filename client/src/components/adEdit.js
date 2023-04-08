@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inputValidation';
 import { userData } from "../context/auth";
 import { adsData } from "../context/adsData";
+import { showMessage } from "../utils/showMessage";
 
 
 export function Edit() {
@@ -77,13 +78,7 @@ export function Edit() {
             updateState();
         }
 
-        document.getElementsByClassName('showEditMessage')[0].style.display = 'block';
-
-        setTimeout(() => {
-
-            document.getElementsByClassName('showEditMessage')[0].style.display = 'none';
-
-        }, 2000);
+        showMessage('Обявата е редактирана');
     }
 
     const updateState = () => {
@@ -117,7 +112,7 @@ export function Edit() {
 
             navigate(`/details/${params.id}`);
 
-        }, 2000);
+        }, 4000);
 
     };
 
@@ -272,8 +267,8 @@ export function Edit() {
                     />
                 </div>
 
-                <div className="showEditMessage">
-                    <p>Обявата е редактирана</p>
+                <div className="showMessage">
+                    <p></p>
                 </div>
                 <button id='adding'>Редакция</button>
             </form>

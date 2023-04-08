@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { addingInputValidation, addingEmptyFieldValidation } from '../utils/inputValidation';
 import { userData } from "../context/auth";
 import { adsData } from "../context/adsData";
+import { showMessage } from "../utils/showMessage";
 
 export default function Adding() {
 
@@ -68,7 +69,15 @@ export default function Adding() {
 
         ads_Data.setMyAds(data => [...data, input]);
 
-        navigate('/');
+        ads_Data.setLastAds(data => [...data, input]);
+
+        showMessage('Обявата е добавена');
+
+        setTimeout(() => {
+
+            navigate('/');
+
+        }, 4000);
 
     }
 
@@ -217,6 +226,9 @@ export default function Adding() {
                         onChange={getInputValue}
                         value={input.name}
                     />
+                </div>
+                <div className="showMessage">
+                    <p></p>
                 </div>
                 <button id='adding'>Добави обява</button>
             </form>

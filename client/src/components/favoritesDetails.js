@@ -65,7 +65,7 @@ export function FavoritesDetails() {
 
             navigate('/user/fav');
 
-        }, 2000);
+        }, 4000);
     }
 
     return (
@@ -73,7 +73,7 @@ export function FavoritesDetails() {
         <>
 
             {ad.length === 0 ? 'Нямате любими' : ''}
-            {ad !== undefined && ad.owner !== user_data.user._id ?
+            {ad.owner !== user_data.user._id ?
 
                 <>
                     {user_data.user._id !== undefined ?
@@ -99,9 +99,9 @@ export function FavoritesDetails() {
                 </div>
 
                 <div className="adData">
-                    <h1>{ad !== undefined ? ad.title : ''}</h1>
-                    <p className="price-2">{ad !== undefined ? ad.price : ''}лв</p>
-                    <p className="description">{ad !== undefined ? ad.description : ''}</p>
+                    <h1>{ad.title}</h1>
+                    <p className="price-2">{ad.price}лв</p>
+                    <p className="description">{ad.description}</p>
                 </div>
 
                 <div className="buttons">
