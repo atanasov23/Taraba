@@ -7,7 +7,7 @@ const timeout = require('connect-timeout')
 
 try {
 
-    mongoose.connect('mongodb://localhost:27017/taraba');
+    mongoose.connect('mongodb://127.0.0.1:27017/taraba');
 
     console.log('Connected to the base');
 
